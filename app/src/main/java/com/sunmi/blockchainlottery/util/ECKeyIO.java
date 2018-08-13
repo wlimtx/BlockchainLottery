@@ -1,5 +1,9 @@
 package com.sunmi.blockchainlottery.util;
 
+import android.content.Context;
+
+import com.sunmi.blockchainlottery.bean.Account;
+
 import org.bouncycastle.util.encoders.Hex;
 
 import java.io.File;
@@ -12,7 +16,7 @@ import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
 import java.security.spec.ECPoint;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -49,11 +53,11 @@ public class ECKeyIO {
         ECPoint w = ((ECPublicKey) pk).getW();
         String pK = PemUtil.fixTo(w.getAffineX().toString(16)) + PemUtil.fixTo(w.getAffineY().toString(16));
         System.out.println("pk: " + pK);
-        byte[] signature = FabricECDSAUtil.signMsg("abc", sk);
-        System.out.println("R: " + PemUtil.fixTo(FabricECDSAUtil.extractR(signature).toString(16)));
-        System.out.println("S: " + PemUtil.fixTo(FabricECDSAUtil.extractS(signature).toString(16)));
+        byte[] signature = ECDSAUtil.signMsg("abc", sk);
+        System.out.println("R: " + PemUtil.fixTo(ECDSAUtil.extractR(signature).toString(16)));
+        System.out.println("S: " + PemUtil.fixTo(ECDSAUtil.extractS(signature).toString(16)));
         System.out.println("sig: " + PemUtil.fixTo(Hex.toHexString(signature)));
-        boolean res = FabricECDSAUtil.verifySignature(pk, "abc", signature);
+        boolean res = ECDSAUtil.verifySignature(pk, "abc", signature);
         System.out.println(res);
     }
 
@@ -87,7 +91,7 @@ public class ECKeyIO {
         String sK = scanner.nextLine();
         String pK = scanner.nextLine();
         scanner.close();
-        return new KeyPair(FabricECDSAUtil.hexToPublicKey(Constant.BasePkPrefix + pK), FabricECDSAUtil.hexToPrivateKey(Constant.BaseSkPrefix + sK));
+        return new KeyPair(ECDSAUtil.hexToPublicKey(Constant.BasePkPrefix + pK), ECDSAUtil.hexToPrivateKey(Constant.BaseSkPrefix + sK));
     }
 
 
@@ -110,7 +114,7 @@ public class ECKeyIO {
     }
 
     public static PrivateKey wrap(String hexSk) throws Exception {
-        return FabricECDSAUtil.hexToPrivateKey(Constant.BaseSkPrefix + hexSk);
+        return ECDSAUtil.hexToPrivateKey(Constant.BaseSkPrefix + hexSk);
     }
 
     public static String[] split(KeyPair kp) {
@@ -123,5 +127,33 @@ public class ECKeyIO {
     }
 
 
+    public static void save(Account account, Context context) throws FileNotFoundException {
+        File parent = context.getFilesDir().getAbsoluteFile();
+        if (!parent.exists()) {
+            parent.mkdirs();
+        }
+        File file = new File(parent, String.valueOf(System.currentTimeMillis()) + "#" + account.getName());
+        System.out.println("save in " + file.getAbsolutePath());
+        PrintStream out = new PrintStream(file);
+        out.println(account.getName());
+        out.println(account.getAddress());
+        out.println(account.getPk());
+        out.println(account.getSk());
+        out.close();
+    }
 
+    public static List<Account> readAll(Context context) throws FileNotFoundException {
+        File parent = context.getFilesDir().getAbsoluteFile();
+        List<Account> accounts = new ArrayList<>();
+
+        for (File file : parent.listFiles()) {
+            Scanner scanner = new Scanner(file);
+            accounts.add(new Account(scanner.nextLine(),
+                    scanner.nextLine(),
+                    scanner.nextLine(),
+                    scanner.nextLine()));
+            scanner.close();
+        }
+        return accounts;
+    }
 }

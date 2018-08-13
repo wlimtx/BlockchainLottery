@@ -12,20 +12,27 @@ import android.widget.Toast;
 
 import com.sunmi.blockchainlottery.MainActivity;
 import com.sunmi.blockchainlottery.R;
+import com.sunmi.blockchainlottery.bean.Account;
 import com.sunmi.blockchainlottery.fragment.AccountFragment;
+
+import java.security.KeyPair;
 
 public class DialogUtil {
     public interface CallBack {
-        void newAccount(String[] account);
+        void newAccount(Account account);
     }
 
-    public static void showNewDialog(CallBack callBack, Activity activity) {
+    public static void showNewDialog(CallBack callBack, Activity activity) throws Exception {
         View view = ((LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.dialog_new_account, null);
         TextView address = view.findViewById(R.id.address);
         EditText nick_name = view.findViewById(R.id.nick_name);
         Button cancel = view.findViewById(R.id.cancel);
         Button confirm = view.findViewById(R.id.confirm);
+        KeyPair keyPair = ECDSAUtil.generateKey();
+        String[] keys = ECKeyIO.split(keyPair);
+        address.setText(keys[0]);
+
         AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setView(view).show();
         cancel.setOnClickListener(v -> dialog.dismiss());
@@ -34,6 +41,8 @@ public class DialogUtil {
             if (name.trim().length() == 0) {
                 activity.runOnUiThread(() -> Toast.makeText(activity, "用户名不能为空", Toast.LENGTH_SHORT).show());
             } else {
+                callBack.newAccount(
+                        new Account(name, keys[0], keys[1], keys[2]));
                 dialog.dismiss();
             }
         });

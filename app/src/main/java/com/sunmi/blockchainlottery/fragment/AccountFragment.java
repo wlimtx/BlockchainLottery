@@ -10,12 +10,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.sunmi.blockchainlottery.R;
 import com.sunmi.blockchainlottery.adapter.AccountAdapter;
 import com.sunmi.blockchainlottery.bean.Account;
 import com.sunmi.blockchainlottery.util.DialogUtil;
+import com.sunmi.blockchainlottery.util.ECKeyIO;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class AccountFragment extends Fragment {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -75,34 +79,55 @@ public class AccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        contentView = inflater.inflate(R.layout.fragment_account, container, false);
+        if (contentView == null) {
+            // Inflate the layout for this fragment
+            contentView = inflater.inflate(R.layout.fragment_account, container, false);
 
-        recyclerView = contentView.findViewById(R.id.my_recycler_view);
+            recyclerView = contentView.findViewById(R.id.my_recycler_view);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()) {
-            @Override
-            public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-                try {
-                    super.onLayoutChildren(recycler, state);
-                } catch (IndexOutOfBoundsException e) {
-                    e.printStackTrace();
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()) {
+                @Override
+                public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+                    try {
+                        super.onLayoutChildren(recycler, state);
+                    } catch (IndexOutOfBoundsException e) {
+                        e.printStackTrace();
+                    }
                 }
+            });
+
+            List<Account> accounts = new ArrayList<>();
+
+            try {
+                accounts.addAll(ECKeyIO.readAll((Context) mListener));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText((Context) mListener, "密钥读取失败，" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
 
-        List<Account> accounts = new ArrayList<>();
+            AccountAdapter adapter = new AccountAdapter(accounts);
+            recyclerView.setAdapter(adapter);
 
-        for (int i = 0; i < 4; i++) {
-            accounts.add(Account.of());
+
+            View new_account = contentView.findViewById(R.id.new_account);
+            new_account.setOnClickListener(view -> {
+                try {
+                    DialogUtil.showNewDialog(account -> {
+                        try {
+                            ECKeyIO.save(account, (Context) mListener);
+                            accounts.add(account);
+                            adapter.notifyItemInserted(accounts.size() - 1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText((Context) mListener, "密钥存储失败，" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }, (Activity) mListener);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText((Context) mListener, "密钥生成失败，" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-
-        AccountAdapter adapter = new AccountAdapter(accounts);
-        recyclerView.setAdapter(adapter);
-
-
-        View new_account = contentView.findViewById(R.id.new_account);
-        new_account.setOnClickListener(view -> DialogUtil.showNewDialog(null, (Activity) mListener));
         return contentView;
     }
 

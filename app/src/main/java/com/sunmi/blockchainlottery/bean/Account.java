@@ -55,12 +55,16 @@ public class Account {
         this.sk = sk;
     }
 
-    public Account(String name, String pk, String sk) {
+    public Account(String name, String address, String pk, String sk) {
         this.name = name;
+        this.address = address;
         this.pk = pk;
         this.sk = sk;
-        address = Hex.toHexString(PemUtil.sha256(Hex.decode(pk)));
         asset = "0.0";
+    }
+
+    public Account(String name, String pk, String sk) {
+        this(name, Hex.toHexString(PemUtil.sha256(Hex.decode(pk))), pk, sk);
     }
 
     public static Account of() {

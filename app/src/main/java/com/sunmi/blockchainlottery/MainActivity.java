@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements
         account_tv = findViewById(R.id.account_tv);
         lottery_tv.setOnClickListener(view -> {
             setFragment(lotteryFragment);
-            System.out.println(lotteryFragment.getGuesses().size());
         });
         account_tv.setOnClickListener(view -> setFragment(accountFragment));
         setFragment(lotteryFragment);

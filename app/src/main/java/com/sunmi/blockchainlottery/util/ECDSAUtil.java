@@ -10,7 +10,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 
 
-public class FabricECDSAUtil {
+public class ECDSAUtil {
 
 
     public static PrivateKey base64ToPrivateKey(String base64Key) throws Exception {
