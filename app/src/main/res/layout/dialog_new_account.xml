@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:textColor="#333333"
+        android:layout_margin="16dp"
+        android:text="新增账户"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/darker_gray"  />
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:text="用户名："
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/nick_name"
+            android:layout_marginLeft="4dp"
+            android:hint="输入一个昵称"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="30dp"
+        android:textSize="16sp"
+        android:textColor="#333333"
+        android:text="账户地址："
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textColor="#333333"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginRight="52dp"
+        android:text="54634665463466757555463ab466754634667554634667554634546346675675"
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+
+        android:layout_marginTop="16dp"
+
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_marginRight="20dp"
+        android:background="@drawable/corners_bg_all"
+        android:id="@+id/cancel"
+        android:text="取消"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp" />
+        <Button
+            android:textColor="#ffffff"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/corners_blue_all"
+            android:id="@+id/confirm"
+            android:text="确定"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp" />
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

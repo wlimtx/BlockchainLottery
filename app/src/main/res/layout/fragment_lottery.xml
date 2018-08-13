@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="#f2f2f2">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/corners_bg_all">
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.sunmi.blockchainlottery.view.CustomImageView
+                android:layout_marginLeft="16dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@mipmap/avatar"
+                app:radius="10dp"
+                app:circle="true"
+                android:id="@+id/iv_build_icon" />
+
+            <TextView
+                android:textColor="#333333"
+                android:layout_marginLeft="8dp"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:text="Sheeran"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp" />
+
+            <TextView
+                android:textColor="#333333"
+                android:layout_marginLeft="52dp"
+                android:textSize="10sp"
+                android:gravity="center_vertical"
+                android:text="账户余额："
+                android:layout_width="wrap_content"
+                android:layout_height="42dp" />
+            <TextView
+                android:textColor="#333333"
+                android:layout_marginLeft="8dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:text="0.00"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/darker_gray"  />
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="32dp"
+                android:id="@+id/recharge"
+                android:src="@mipmap/recharge"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:textColor="#333333"
+                android:layout_marginLeft="8dp"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:text="充值"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
+
+            <ImageView
+                android:layout_marginLeft="48dp"
+                android:id="@+id/transfer"
+                android:src="@mipmap/transfer"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:textColor="#333333"
+                android:layout_marginLeft="8dp"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:text="转账"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:background="@drawable/corners_bg">
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/lottery"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+            <TextView
+                android:textColor="#333333"
+                android:textSize="16sp"
+                android:layout_marginLeft="6dp"
+                android:gravity="center_vertical"
+                android:text="幸运抽奖"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp" />
+        </LinearLayout>
+
+
+        <ProgressBar
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="4dp"
+            android:id="@+id/upPb"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
