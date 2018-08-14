@@ -29,6 +29,7 @@
                 android:id="@+id/iv_build_icon" />
 
             <TextView
+                android:id="@+id/nick_name"
                 android:textColor="#333333"
                 android:layout_marginLeft="8dp"
                 android:textSize="18sp"
@@ -46,6 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="42dp" />
             <TextView
+                android:id="@+id/asset"
                 android:textColor="#333333"
                 android:layout_marginLeft="8dp"
                 android:textSize="24sp"

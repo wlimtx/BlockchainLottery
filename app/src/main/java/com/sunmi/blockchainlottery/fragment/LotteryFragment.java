@@ -15,10 +15,14 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.sunmi.blockchainlottery.MainActivity;
 import com.sunmi.blockchainlottery.R;
 import com.sunmi.blockchainlottery.adapter.LotteryAdapter;
+import com.sunmi.blockchainlottery.bean.Account;
 import com.sunmi.blockchainlottery.bean.Message;
 import com.sunmi.blockchainlottery.item.Guess;
+import com.sunmi.blockchainlottery.util.Constant;
+import com.sunmi.blockchainlottery.util.ECKeyIO;
 import com.sunmi.blockchainlottery.util.NetUtil;
 import com.sunmi.blockchainlottery.util.Worker;
 
@@ -53,6 +57,7 @@ public class LotteryFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private Account account;
 
     public LotteryFragment() {
         // Required empty public constructor
@@ -107,6 +112,9 @@ public class LotteryFragment extends Fragment {
     }
 
     private View contentView;
+    TextView tv;
+    TextView asset;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -118,13 +126,17 @@ public class LotteryFragment extends Fragment {
             contentView = inflater.inflate(R.layout.fragment_lottery, container, false);
             mRecyclerView = contentView.findViewById(R.id.my_recycler_view);
 
+
+            tv = contentView.findViewById(R.id.nick_name);
+            asset = contentView.findViewById(R.id.asset);
+
             upPb = contentView.findViewById(R.id.upPb);
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
 //        mRecyclerView.setHasFixedSize(true);
 
             // use a linear layout manager
-            mLayoutManager = new LinearLayoutManager(getContext()){
+            mLayoutManager = new LinearLayoutManager(getContext()) {
                 @Override
                 public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
                     try {
@@ -188,9 +200,12 @@ public class LotteryFragment extends Fragment {
             mAdapter.notifyItemRangeRemoved(0, size);
             initData(2);
         }
+
+        tv.setText(account.getName());
+        asset.setText(account.getAsset());
+
         return contentView;
     }
-
 
     public void onButtonPressed(Runnable runnable) {
         if (mListener != null) {
@@ -219,6 +234,11 @@ public class LotteryFragment extends Fragment {
 
     public List<Guess> getGuesses() {
         return guesses;
+    }
+
+    public void setAccount(Account account) {
+
+        this.account = account;
     }
 
     /**

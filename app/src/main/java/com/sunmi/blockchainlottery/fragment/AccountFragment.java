@@ -12,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.sunmi.blockchainlottery.MainActivity;
 import com.sunmi.blockchainlottery.R;
 import com.sunmi.blockchainlottery.adapter.AccountAdapter;
 import com.sunmi.blockchainlottery.bean.Account;
+import com.sunmi.blockchainlottery.util.Constant;
 import com.sunmi.blockchainlottery.util.DialogUtil;
 import com.sunmi.blockchainlottery.util.ECKeyIO;
 
@@ -30,7 +32,7 @@ import java.util.List;
  * Use the {@link AccountFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AccountFragment extends Fragment {
+public class AccountFragment extends Fragment implements AccountAdapter.AccountSelectListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,6 +45,7 @@ public class AccountFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private Account account;
     public AccountFragment() {
         // Required empty public constructor
     }
@@ -68,6 +71,7 @@ public class AccountFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -76,9 +80,12 @@ public class AccountFragment extends Fragment {
 
     private View contentView;
     private RecyclerView recyclerView;
+    private AccountAdapter adapter;
+    private List<Account> accounts;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         if (contentView == null) {
             // Inflate the layout for this fragment
             contentView = inflater.inflate(R.layout.fragment_account, container, false);
@@ -96,7 +103,8 @@ public class AccountFragment extends Fragment {
                 }
             });
 
-            List<Account> accounts = new ArrayList<>();
+
+            accounts = new ArrayList<>();
 
             try {
                 accounts.addAll(ECKeyIO.readAll((Context) mListener));
@@ -105,8 +113,10 @@ public class AccountFragment extends Fragment {
                 Toast.makeText((Context) mListener, "密钥读取失败，" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
-            AccountAdapter adapter = new AccountAdapter(accounts);
+
+            adapter = new AccountAdapter(accounts, this);
             recyclerView.setAdapter(adapter);
+
 
 
             View new_account = contentView.findViewById(R.id.new_account);
@@ -128,6 +138,7 @@ public class AccountFragment extends Fragment {
                 }
             });
         }
+        adapter.setSelectAccount(account);
         return contentView;
     }
 
@@ -153,6 +164,20 @@ public class AccountFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onSelect(Account account) {
+        this.account = account;
+
+        ((Context) mListener).getSharedPreferences(Constant.DefaultDatabase, 0)
+                .edit()
+                .putString("name", account.getName()).apply();
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -168,4 +193,9 @@ public class AccountFragment extends Fragment {
         void runOnMainThread(Runnable runnable);
 
     }
+
+    public Account getAccount() {
+        return account;
+    }
+
 }

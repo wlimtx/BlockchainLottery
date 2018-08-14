@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.zxing.WriterException;
@@ -18,11 +17,28 @@ import java.util.List;
 
 public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    List<Account> accounts;
-
-    public AccountAdapter(List<Account> accounts) {
+    public AccountAdapter(List<Account> accounts, AccountSelectListener accountSelectListener) {
         this.accounts = accounts;
+        this.accountSelectListener = accountSelectListener;
     }
+
+    public interface AccountSelectListener {
+        void onSelect(Account account);
+    }
+
+    private AccountSelectListener accountSelectListener;
+
+    private Account selectAccount;
+
+    public Account getSelectAccount() {
+        return selectAccount;
+    }
+
+    public void setSelectAccount(Account selectAccount) {
+        this.selectAccount = selectAccount;
+    }
+
+    private List<Account> accounts;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -54,16 +70,23 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView address = view.findViewById(R.id.address);
         ImageView small_qr_code = view.findViewById(R.id.small_qr_code);
         TextView account_flag = view.findViewById(R.id.account_flag);
+
+
         return new MyViewHolder(view, name, asset, address, small_qr_code, account_flag);
     }
 
+    private View accountUseFlag;
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
 
         MyViewHolder viewHolder = (MyViewHolder) holder;
-        if (position == 0) viewHolder.account_flag.setVisibility(View.VISIBLE);
-        else viewHolder.account_flag.setVisibility(View.GONE);
+        if (accounts.get(position).getName().equals(getSelectAccount().getName())) {
+            viewHolder.account_flag.setVisibility(View.VISIBLE);
+            accountUseFlag = viewHolder.account_flag;
+        } else {
+            viewHolder.account_flag.setVisibility(View.GONE);
+        }
 
         viewHolder.address.setText(accounts.get(position).getAddress()
                 .replaceFirst("(.{24}).*+", "$1...>"));
@@ -75,6 +98,17 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } catch (WriterException e) {
             e.printStackTrace();
         }
+        viewHolder.itemView.setOnClickListener(v -> {
+
+            if (accountUseFlag != viewHolder.account_flag) {
+                accountUseFlag.setVisibility(View.GONE);
+                viewHolder.account_flag.setVisibility(View.VISIBLE);
+                accountUseFlag = viewHolder.account_flag;
+                setSelectAccount(accounts.get(position));
+                accountSelectListener.onSelect(getSelectAccount());
+            }
+        });
+
     }
 
     @Override

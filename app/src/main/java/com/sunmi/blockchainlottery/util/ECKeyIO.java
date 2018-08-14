@@ -2,6 +2,7 @@ package com.sunmi.blockchainlottery.util;
 
 import android.content.Context;
 
+import com.sunmi.blockchainlottery.MainActivity;
 import com.sunmi.blockchainlottery.bean.Account;
 
 import org.bouncycastle.util.encoders.Hex;
@@ -145,15 +146,41 @@ public class ECKeyIO {
     public static List<Account> readAll(Context context) throws FileNotFoundException {
         File parent = context.getFilesDir().getAbsoluteFile();
         List<Account> accounts = new ArrayList<>();
-
-        for (File file : parent.listFiles()) {
-            Scanner scanner = new Scanner(file);
-            accounts.add(new Account(scanner.nextLine(),
-                    scanner.nextLine(),
-                    scanner.nextLine(),
-                    scanner.nextLine()));
-            scanner.close();
-        }
+        for (File file : parent.listFiles()) accounts.add(read(file));
         return accounts;
+    }
+
+    public static Account read(File file) throws FileNotFoundException {
+        try (Scanner scanner = new Scanner(file)) {
+            return new Account(scanner.nextLine(),
+                    scanner.nextLine(),
+                    scanner.nextLine(),
+                    scanner.nextLine());
+        }
+    }
+
+    public static Account readFirst(Context context) throws Exception {
+        File[] files = context.getFilesDir().getAbsoluteFile().listFiles();
+        if (files == null || files.length == 0) {
+            String[] keys = split(ECDSAUtil.generateKey());
+            Account account = new Account(RandomString.nextName().toString(), keys[0], keys[1], keys[2]);
+            save(account, context);
+            return account;
+        } else {
+            return read(files[0]);
+        }
+    }
+
+    public static Account readByName(Context context, String name) throws Exception {
+        File[] files = context.getFilesDir().getAbsoluteFile().listFiles();
+        if (files == null || files.length == 0) {
+            String[] keys = split(ECDSAUtil.generateKey());
+            Account account = new Account(RandomString.nextName().toString(), keys[0], keys[1], keys[2]);
+            save(account, context);
+            return account;
+        } else {
+            for (File file : files) if (file.getName().endsWith("#" + name)) return read(file);
+            return read(files[0]);
+        }
     }
 }

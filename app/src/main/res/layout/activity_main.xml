@@ -35,6 +35,7 @@
             android:background="@android:color/darker_gray"  />
 
         <TextView
+            android:background="@drawable/right_corner_white"
             android:id="@+id/account_tv"
             android:textColor="#333333"
             android:textStyle="bold"

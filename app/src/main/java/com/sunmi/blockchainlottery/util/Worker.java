@@ -17,7 +17,10 @@ public class Worker {
     private ScheduledFuture<?> self;
 
     public static void setJob(Runnable runnable) {
-        if (instance.job != null) throw new RuntimeException("job has been assigned");
+        if (instance.job != null){
+            pause();
+//            throw new RuntimeException("job has been assigned");
+        }
         instance.job = runnable;
     }
 

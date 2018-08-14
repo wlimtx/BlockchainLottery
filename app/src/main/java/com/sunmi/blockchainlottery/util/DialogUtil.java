@@ -3,6 +3,7 @@ package com.sunmi.blockchainlottery.util;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,15 @@ import com.sunmi.blockchainlottery.fragment.AccountFragment;
 import java.security.KeyPair;
 
 public class DialogUtil {
+    public static void showExitDialog(Context context, String message) {
+        AlertDialog dialog = new AlertDialog.Builder(context).setTitle("Exception when read secret key").setMessage(message).setPositiveButton("退出", (dialogInterface, i) -> {
+            System.exit(1);
+        }).create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
     public interface CallBack {
         void newAccount(Account account);
     }
