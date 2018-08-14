@@ -13,24 +13,31 @@ public class Worker {
     }
 
     private final ScheduledExecutorService SERVICE;
-    private Runnable job;
-    private ScheduledFuture<?> self;
+    private Runnable updateJob;
+    private Runnable queryJob;
+    private ScheduledFuture<?> update;
+    private ScheduledFuture<?> query;
 
-    public static void setJob(Runnable runnable) {
-        if (instance.job != null){
+    public static void setJob(Runnable updateJob, Runnable queryJob) {
+        if (instance.updateJob != null) {
             pause();
 //            throw new RuntimeException("job has been assigned");
         }
-        instance.job = runnable;
+        instance.updateJob = updateJob;
+        instance.queryJob = queryJob;
     }
 
     public static void pause() {
-        instance.self.cancel(false);
+        instance.update.cancel(false);
+        instance.query.cancel(false);
     }
 
-    public static void resume(int initialDelay, int delay) {
-        instance.self = instance.SERVICE.scheduleWithFixedDelay(instance.job
+    public static void resume(int initialDelay, int delay, int initialDelay2, int delay2) {
+        instance.update = instance.SERVICE.scheduleWithFixedDelay(instance.updateJob
                 , initialDelay, delay, TimeUnit.SECONDS);
+
+        instance.query = instance.SERVICE.scheduleWithFixedDelay(instance.queryJob
+                , initialDelay2, delay2, TimeUnit.SECONDS);
     }
 
 }

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#f2f2f2">
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -13,36 +14,43 @@
         android:layout_height="0dp">
 
     </FrameLayout>
-
     <LinearLayout
+        android:background="#f2f2f2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@drawable/corners_bg">
-        <TextView
-            android:background="@drawable/left_corner_color"
+        android:layout_height="wrap_content">
 
-            android:id="@+id/lottery_tv"
-            android:textColor="#ffffff"
-            android:gravity="center"
-            android:text="抽奖"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"  />
 
-        <TextView
-            android:background="@drawable/right_corner_white"
-            android:id="@+id/account_tv"
-            android:textColor="#333333"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:text="账户"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/corners_bg_top">
+            <TextView
+                android:background="@drawable/left_corner_color"
+
+                android:id="@+id/lottery_tv"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:text="抽奖"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"  />
+
+            <TextView
+                android:background="@drawable/right_corner_white"
+                android:id="@+id/account_tv"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="账户"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

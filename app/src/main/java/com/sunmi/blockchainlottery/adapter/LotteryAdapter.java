@@ -86,7 +86,7 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             + guess.getStartTime().getDate() + "日第"
                             + guess.getId() + "轮竞猜");
             vh.status_tv.setText(guess.isOver() ? "竞猜结束" : "竞猜中");
-            vh.sum_bet_tv.setText(String.valueOf(guess.getSumBet()));
+            vh.sum_bet_tv.setText(String.format("%.2f", guess.getSumBet()));
 
 
             if (position == 0) {

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.sunmi.blockchainlottery.MainActivity;
 import com.sunmi.blockchainlottery.R;
 import com.sunmi.blockchainlottery.bean.Account;
+import com.sunmi.blockchainlottery.dialog.MyDialog;
 import com.sunmi.blockchainlottery.fragment.AccountFragment;
 
 import java.security.KeyPair;
@@ -42,9 +43,9 @@ public class DialogUtil {
         KeyPair keyPair = ECDSAUtil.generateKey();
         String[] keys = ECKeyIO.split(keyPair);
         address.setText(keys[0]);
+        MyDialog dialog = new MyDialog(activity, view, R.style.dialog);
 
-        AlertDialog dialog = new AlertDialog.Builder(activity)
-                .setView(view).show();
+
         cancel.setOnClickListener(v -> dialog.dismiss());
         confirm.setOnClickListener(v -> {
             String name = nick_name.getText().toString();
@@ -56,6 +57,29 @@ public class DialogUtil {
                 dialog.dismiss();
             }
         });
+        dialog.show();
+    }
 
+    public static void showRechargeDialog(CallBack callBack, Activity activity) {
+        View view = ((LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                .inflate(R.layout.dialog_new_account, null);
+
+        EditText asset = view.findViewById(R.id.asset);
+        Button cancel = view.findViewById(R.id.cancel);
+        Button confirm = view.findViewById(R.id.confirm);
+        MyDialog dialog = new MyDialog(activity, view, R.style.dialog);
+
+
+        cancel.setOnClickListener(v -> dialog.dismiss());
+        confirm.setOnClickListener(v -> {
+            String money = asset.getText().toString();
+            try {
+                double m = Double.parseDouble(money);
+                dialog.dismiss();
+            } catch (NumberFormatException e) {
+                activity.runOnUiThread(() -> Toast.makeText(activity, "请输入正确的金额", Toast.LENGTH_SHORT).show());
+            }
+        });
+        dialog.show();
     }
 }

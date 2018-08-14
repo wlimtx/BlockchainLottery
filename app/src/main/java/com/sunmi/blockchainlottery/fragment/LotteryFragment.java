@@ -1,5 +1,6 @@
 package com.sunmi.blockchainlottery.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,15 +14,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sunmi.blockchainlottery.MainActivity;
 import com.sunmi.blockchainlottery.R;
 import com.sunmi.blockchainlottery.adapter.LotteryAdapter;
 import com.sunmi.blockchainlottery.bean.Account;
+import com.sunmi.blockchainlottery.bean.CCUser;
 import com.sunmi.blockchainlottery.bean.Message;
 import com.sunmi.blockchainlottery.item.Guess;
 import com.sunmi.blockchainlottery.util.Constant;
+import com.sunmi.blockchainlottery.util.DialogUtil;
 import com.sunmi.blockchainlottery.util.ECKeyIO;
 import com.sunmi.blockchainlottery.util.NetUtil;
 import com.sunmi.blockchainlottery.util.Worker;
@@ -46,6 +51,7 @@ public class LotteryFragment extends Fragment {
 
     ProgressBar upPb;
 
+    private CCUser ccUser = new CCUser();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,6 +85,30 @@ public class LotteryFragment extends Fragment {
                     });
                 }
             }
+        }, () -> {
+//            if (account != null) {
+//                NetUtil.query(account.getAddress(), new Callback() {
+//                    @Override
+//                    public void onFailure(Call call, IOException e) {
+//                        e.printStackTrace();
+//                        onButtonPressed(() -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+//                    }
+//
+//                    @Override
+//                    public void onResponse(Call call, Response response) throws IOException {
+//                        if (response.body() != null) {
+//                            String json = response.body().string();
+//
+//                            List<String> data = ((Message<List<String>>) new ObjectMapper()
+//                                    .readValue(json
+//                                            , new TypeReference<Message<List<String>>>() {
+//                                            })).getData();
+//                            ccUser = new ObjectMapper().readValue(data.get(0), CCUser.class);
+//                            mListener.runOnMainThread(() -> asset.setText(String.format("%.2f", Double.valueOf(ccUser.getAsset()))));
+//                        }
+//                    }
+//                });
+//            }
         });
     }
 
@@ -127,6 +157,9 @@ public class LotteryFragment extends Fragment {
             mRecyclerView = contentView.findViewById(R.id.my_recycler_view);
 
 
+            View.OnClickListener onClickListener = v -> DialogUtil.showRechargeDialog(null, (Activity) mListener);
+            contentView.findViewById(R.id.recharge).setOnClickListener(onClickListener);
+            contentView.findViewById(R.id.recharge_tv).setOnClickListener(onClickListener);
             tv = contentView.findViewById(R.id.nick_name);
             asset = contentView.findViewById(R.id.asset);
 
@@ -441,7 +474,7 @@ public class LotteryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Worker.resume(1, 1);
+        Worker.resume(1, 1, 1, 6);
         System.out.println("onResume");
     }
 

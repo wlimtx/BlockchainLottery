@@ -79,6 +79,7 @@
                 android:layout_height="30dp" />
 
             <TextView
+                android:id="@+id/recharge_tv"
                 android:textColor="#333333"
                 android:layout_marginLeft="8dp"
                 android:textSize="14sp"
@@ -113,7 +114,7 @@
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="0dp"
-        android:background="@drawable/corners_bg">
+        android:background="@drawable/corners_bg_top">
 
         <LinearLayout
             android:layout_marginTop="8dp"

@@ -78,10 +78,11 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private View accountUseFlag;
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-
         MyViewHolder viewHolder = (MyViewHolder) holder;
-        if (accounts.get(position).getName().equals(getSelectAccount().getName())) {
+        String name = getSelectAccount().getName();
+        String name2 = accounts.get(position).getName();
+        System.out.println(name + ", " + name2);
+        if (name2.equals(name)) {
             viewHolder.account_flag.setVisibility(View.VISIBLE);
             accountUseFlag = viewHolder.account_flag;
         } else {
@@ -99,7 +100,6 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             e.printStackTrace();
         }
         viewHolder.itemView.setOnClickListener(v -> {
-
             if (accountUseFlag != viewHolder.account_flag) {
                 accountUseFlag.setVisibility(View.GONE);
                 viewHolder.account_flag.setVisibility(View.VISIBLE);

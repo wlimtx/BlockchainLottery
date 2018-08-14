@@ -10,7 +10,8 @@
     <TextView
         android:textColor="#333333"
         android:layout_margin="16dp"
-        android:text="新增账户"
+        android:text="充值"
+        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <View
@@ -26,36 +27,20 @@
         <TextView
             android:textSize="16sp"
             android:textColor="#333333"
-            android:text="用户名："
+            android:text="金额："
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
-            android:id="@+id/nick_name"
+            android:inputType="numberDecimal"
+            android:id="@+id/asset"
             android:layout_marginLeft="4dp"
-            android:hint="输入一个昵称"
+            android:hint="输入充值金额"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <TextView
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="30dp"
-        android:textSize="16sp"
-        android:textColor="#333333"
-        android:text="账户地址："
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
-    <TextView
-        android:textColor="#333333"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginRight="52dp"
-        android:text="54634665463466757555463ab466754634667554634667554634546346675675"
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <LinearLayout
 
