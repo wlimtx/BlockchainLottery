@@ -28,6 +28,7 @@ import com.sunmi.blockchainlottery.adapter.LotteryAdapter;
 import com.sunmi.blockchainlottery.bean.Account;
 import com.sunmi.blockchainlottery.bean.CCUser;
 import com.sunmi.blockchainlottery.bean.Message;
+import com.sunmi.blockchainlottery.component.TransferDialog;
 import com.sunmi.blockchainlottery.item.Guess;
 import com.sunmi.blockchainlottery.util.Constant;
 import com.sunmi.blockchainlottery.util.DialogUtil;
@@ -99,8 +100,13 @@ public class LotteryFragment extends Fragment {
                                             });
                             if (listMessage.getCode() == 200) {
                                 List<String> data = listMessage.getData();
+                                if (data.size() == 0) {
+                                    onButtonPressed(() -> Toast.makeText(getContext(), "blockchain network exception", Toast.LENGTH_SHORT).show());
+                                    return;
+                                }
                                 ccUser = new ObjectMapper().readValue(data.get(0), CCUser.class);
 
+                                account.setAsset(ccUser.getAsset());
                                 onButtonPressed(() -> asset.setText(String.format("%.2f", Double.valueOf(ccUser.getAsset()))));
                             } else {
                                 onButtonPressed(() -> Toast.makeText(getContext(), listMessage.getMessage() + listMessage.getData(), Toast.LENGTH_SHORT).show());
@@ -192,6 +198,43 @@ public class LotteryFragment extends Fragment {
             };
             contentView.findViewById(R.id.recharge).setOnClickListener(onClickListener);
             contentView.findViewById(R.id.recharge_tv).setOnClickListener(onClickListener);
+
+            View.OnClickListener onClickListener2 = v2 -> {
+
+                TransferDialog dialogs = new TransferDialog();
+                dialogs.setWorker(account, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                        onButtonPressed(() -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+                        dialogs.dismiss();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+                        if (response.body() != null) {
+                            Message<String> message = new Gson().fromJson(response.body().string(),
+                                    new TypeToken<Message<String>>() {
+                                    }.getType());
+                            if (message.getCode() == 200) {
+                                onButtonPressed(() -> Toast.makeText(getContext(),
+                                        "转账成功等待确认:" + message.getData(), Toast.LENGTH_SHORT).show());
+                            } else {
+                                onButtonPressed(() -> Toast.makeText(getContext(),
+                                        "转账失败:" + message.getMessage() + message.getData(), Toast.LENGTH_SHORT).show());
+                            }
+                        }
+                        response.close();
+                        dialogs.dismiss();
+                    }
+                });
+                if (mListener!=null)
+                    dialogs.show(((MainActivity) mListener).getFragmentManager(), "TransferDialog");
+
+            };
+            contentView.findViewById(R.id.transfer).setOnClickListener(onClickListener2);
+            contentView.findViewById(R.id.transfer_tv).setOnClickListener(onClickListener2);
             tv = contentView.findViewById(R.id.nick_name);
             asset = contentView.findViewById(R.id.asset);
 
@@ -266,9 +309,12 @@ public class LotteryFragment extends Fragment {
             initData(2);
         }
 
-        tv.setText(account.getName());
-        asset.setText(account.getAsset());
-        mAdapter.setAccount(account, this);
+        if (account != null) {
+            tv.setText(account.getName());
+            asset.setText(account.getAsset());
+            mAdapter.setAccount(account, this);
+
+        }
 
         return contentView;
     }
@@ -352,39 +398,43 @@ public class LotteryFragment extends Fragment {
                     }
                     if (count <= 0) {
                         mRecyclerView.post(() -> {
-                            View v = mLayoutManager.getChildAt(0);
-                            View view = v.findViewById(R.id.left_time_tv);
-                            if (view != null) {
+                            try {
+                                View v = mLayoutManager.getChildAt(0);
+                                View view = v.findViewById(R.id.left_time_tv);
+                                if (view != null) {
 
 
-                                ((TextView) view)
-                                        .setText((diff < 0 ? "0" : String.valueOf(diff)) + "秒后结束投注");
+                                    ((TextView) view)
+                                            .setText((diff < 0 ? "0" : String.valueOf(diff)) + "秒后结束投注");
 
+                                }
+                                if (guess.getSumBet() != guesses.get(0).getSumBet()) {
+                                    view = v.findViewById(R.id.sum_bet_tv);
+                                    if (view != null) ((TextView) view)
+                                            .setText(String.format("%.2f", guess.getSumBet()));
+                                }
+                                TextView bet_action = v.findViewById(R.id.bet_action);
+
+                                String status = ccUser.getStatus();
+                                System.out.println("status: " + "0".equals(status));
+
+                                if (!"0".equals(status)) {
+                                    bet_action.setTextColor(Color.rgb(153, 157, 195));
+                                    bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_white_all));
+                                    bet_action.setText("已投注");
+                                    bet_action.setClickable(false);
+                                } else {
+                                    bet_action.setTextColor(Color.rgb(255, 247, 247));
+                                    bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_color_all));
+                                    bet_action.setText("立即投注");
+                                    bet_action.setClickable(true);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                            if (guess.getSumBet() != guesses.get(0).getSumBet()) {
-                                view = v.findViewById(R.id.sum_bet_tv);
-                                if (view != null) ((TextView) view)
-                                        .setText(String.format("%.2f", guess.getSumBet()));
-                            }
-                            TextView bet_action = v.findViewById(R.id.bet_action);
-
-                            String status = ccUser.getStatus();
-                            System.out.println("status: " + "0".equals(status));
-
-                            if (!"0".equals(status)) {
-                                bet_action.setTextColor(Color.rgb(153, 157, 195));
-                                bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_white_all));
-                                bet_action.setText("已投注");
-                                bet_action.setClickable(false);
-                            } else {
-                                bet_action.setTextColor(Color.rgb(255, 247, 247));
-                                bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_color_all));
-                                bet_action.setText("立即投注");
-                                bet_action.setClickable(true);
-                            }
-
                             response.close();
                         });
+
                         return;
                     }
                     if (loading) return;

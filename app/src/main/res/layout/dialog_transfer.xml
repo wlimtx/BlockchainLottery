@@ -32,12 +32,18 @@
             android:layout_height="wrap_content" />
         <EditText
             android:inputType="numberDecimal"
-            android:id="@+id/asset"
+            android:id="@+id/address"
             android:layout_marginLeft="4dp"
-            android:hint="输入充值金额"
+            android:hint="输入对方ID"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/scan"
+            android:layout_gravity="center"
+            android:src="@drawable/scan2"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
     </LinearLayout>
 
     <LinearLayout

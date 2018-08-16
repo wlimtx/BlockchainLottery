@@ -82,7 +82,7 @@ public class NetUtil {
                 .transfer(String.valueOf(money), receiveAddress,
                         account.getPk(), account.getSk());
 
-        String args = "{\"args\":" + Arrays.toString(transferArgs).replaceAll("(\\w++)", "\\\"$1\\\"") + ",\"token\":\""
+        String args = "{\"args\":" + Arrays.toString(transferArgs).replaceAll("([\\w.]++)", "\\\"$1\\\"") + ",\"token\":\""
                 + ValidToken + "\"}";
         System.out.println(args);
         String httpsURL = baseHttpUrl + "api/blockchain/fabric/v1/invoke";

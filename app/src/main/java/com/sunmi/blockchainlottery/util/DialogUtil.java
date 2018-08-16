@@ -8,14 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.WriterException;
 import com.sunmi.blockchainlottery.R;
 import com.sunmi.blockchainlottery.bean.Account;
 import com.sunmi.blockchainlottery.dialog.MyDialog;
+import com.uuzuche.lib_zxing.encoding.EncodingHandler;
 
 import java.security.KeyPair;
+import java.util.logging.Handler;
 
 import okhttp3.Callback;
 
@@ -26,6 +30,17 @@ public class DialogUtil {
         }).create();
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    public static void showQrCode(String address, Context context) throws WriterException {
+        View view = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                .inflate(R.layout.dialog_qrcode, null);
+        TextView address_tv = view.findViewById(R.id.address);
+        ImageView big_qr_code = view.findViewById(R.id.big_qr_code);
+        address_tv.setText(address);
+        big_qr_code.setImageBitmap(EncodingHandler.createQRCode(address, 200));
+        MyDialog dialog = new MyDialog(context, view, R.style.dialog);
         dialog.show();
     }
 
@@ -119,11 +134,13 @@ public class DialogUtil {
         return dialog;
     }
 
+    @Deprecated
     public static Dialog showTransferDialog(Account account, Callback callBack, Activity activity) {
         View view = ((LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                .inflate(R.layout.dialog_betting, null);
+                .inflate(R.layout.dialog_transfer, null);
 
         EditText asset = view.findViewById(R.id.asset);
+        EditText address = view.findViewById(R.id.address);
         Button cancel = view.findViewById(R.id.cancel);
         Button confirm = view.findViewById(R.id.confirm);
         MyDialog dialog = new MyDialog(activity, view, R.style.dialog);
@@ -135,8 +152,12 @@ public class DialogUtil {
             String money = asset.getText().toString();
             try {
                 double m = Double.parseDouble(money);
-
-                NetUtil.bet(account, m, callBack);
+                String addr = address.getText().toString();
+                if (!addr.matches("[\\da-f]++")) {
+                    activity.runOnUiThread(() -> Toast.makeText(activity, "无效的账户ID", Toast.LENGTH_SHORT).show());
+                    return;
+                }
+                NetUtil.transfer(account, m, addr, callBack);
                 dialog.dismiss();
             } catch (NumberFormatException e) {
                 activity.runOnUiThread(() -> Toast.makeText(activity, "请输入正确的金额", Toast.LENGTH_SHORT).show());

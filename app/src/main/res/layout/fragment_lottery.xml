@@ -96,6 +96,7 @@
                 android:layout_height="30dp" />
 
             <TextView
+                android:id="@+id/transfer_tv"
                 android:textColor="#333333"
                 android:layout_marginLeft="8dp"
                 android:textSize="14sp"

@@ -1,5 +1,6 @@
 package com.sunmi.blockchainlottery.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,11 +13,13 @@ import android.widget.Toast;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.WriterException;
+import com.sunmi.blockchainlottery.MyApplication;
 import com.sunmi.blockchainlottery.R;
 import com.sunmi.blockchainlottery.bean.Account;
 import com.sunmi.blockchainlottery.bean.CCUser;
 import com.sunmi.blockchainlottery.bean.Message;
 import com.sunmi.blockchainlottery.fragment.AccountFragment;
+import com.sunmi.blockchainlottery.util.DialogUtil;
 import com.sunmi.blockchainlottery.util.ECKeyIO;
 import com.sunmi.blockchainlottery.util.NetUtil;
 import com.uuzuche.lib_zxing.encoding.EncodingHandler;
@@ -100,8 +103,11 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (name2.equals(name)) {
             viewHolder.account_flag.setVisibility(View.VISIBLE);
             accountUseFlag = viewHolder.account_flag;
+            System.out.println("setActionListener");
+
         } else {
             viewHolder.account_flag.setVisibility(View.GONE);
+            viewHolder.itemView.setOnClickListener(null);
         }
 
         viewHolder.address.setText(accounts.get(position).getAddress()
@@ -122,6 +128,18 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 accountUseFlag = viewHolder.account_flag;
                 setSelectAccount(accounts.get(position));
                 accountSelectListener.onSelect(getSelectAccount());
+            } else {
+
+                try {
+                    System.out.println("show dialog");
+                    Context context = ((AccountFragment) accountSelectListener).getContext();
+                    if (context != null)
+                        DialogUtil.showQrCode(accounts.get(position).getAddress(), context);
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         });
         query(accounts.get(position).getAddress(), viewHolder.asset);
@@ -155,6 +173,10 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                     });
                     if (listMessage.getCode() == 200) {
                         List<String> data = listMessage.getData();
+                        if (data.size() == 0) {
+                            ((AccountFragment) accountSelectListener).onButtonPressed(() -> Toast.makeText( ((AccountFragment) accountSelectListener).getContext(), "blockchain network exception", Toast.LENGTH_SHORT).show());
+                            return;
+                        }
                         CCUser ccUser = new ObjectMapper().readValue(data.get(0), CCUser.class);
 
                         ((AccountFragment) accountSelectListener).onButtonPressed(() -> view.setText(String.format("%.2f", Double.valueOf(ccUser.getAsset()))));
