@@ -10,19 +10,31 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunmi.blockchainlottery.MainActivity;
 import com.sunmi.blockchainlottery.R;
 import com.sunmi.blockchainlottery.adapter.AccountAdapter;
 import com.sunmi.blockchainlottery.bean.Account;
+import com.sunmi.blockchainlottery.bean.CCUser;
+import com.sunmi.blockchainlottery.bean.Message;
 import com.sunmi.blockchainlottery.util.Constant;
 import com.sunmi.blockchainlottery.util.DialogUtil;
 import com.sunmi.blockchainlottery.util.ECKeyIO;
+import com.sunmi.blockchainlottery.util.NetUtil;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,17 +94,20 @@ public class AccountFragment extends Fragment implements AccountAdapter.AccountS
     private RecyclerView recyclerView;
     private AccountAdapter adapter;
     private List<Account> accounts;
+    private LinearLayoutManager linearLayoutManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         if (contentView == null) {
-            // Inflate the layout for this fragment
+            // Inflate the linearLayoutManager for this fragment
             contentView = inflater.inflate(R.layout.fragment_account, container, false);
 
             recyclerView = contentView.findViewById(R.id.my_recycler_view);
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()) {
+
+            linearLayoutManager = new LinearLayoutManager(getContext()) {
                 @Override
                 public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
                     try {
@@ -101,13 +116,15 @@ public class AccountFragment extends Fragment implements AccountAdapter.AccountS
                         e.printStackTrace();
                     }
                 }
-            });
+            };
+            recyclerView.setLayoutManager(linearLayoutManager);
 
 
             accounts = new ArrayList<>();
 
             try {
                 accounts.addAll(ECKeyIO.readAll((Context) mListener));
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Toast.makeText((Context) mListener, "密钥读取失败，" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -116,7 +133,6 @@ public class AccountFragment extends Fragment implements AccountAdapter.AccountS
 
             adapter = new AccountAdapter(accounts, this);
             recyclerView.setAdapter(adapter);
-
 
 
             View new_account = contentView.findViewById(R.id.new_account);
@@ -137,8 +153,45 @@ public class AccountFragment extends Fragment implements AccountAdapter.AccountS
                     Toast.makeText((Context) mListener, "密钥生成失败，" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
+        } else {
+            int childCount = linearLayoutManager.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                int finalI = i;
+                NetUtil.query(accounts.get(i).getAddress(), new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                        onButtonPressed(() -> Toast
+                                .makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.body() != null) {
+                            String json = response.body().string();
+
+                            Message<List<String>> listMessage = new ObjectMapper()
+                                    .readValue(json
+                                            , new TypeReference<Message<List<String>>>() {
+                                            });
+                            if (listMessage.getCode() == 200) {
+                                List<String> data = listMessage.getData();
+                                CCUser ccUser = new ObjectMapper().readValue(data.get(0), CCUser.class);
+
+                                onButtonPressed(() -> ((TextView) linearLayoutManager.getChildAt(finalI).findViewById(R.id.asset)).setText(String.format("%.2f", Double.valueOf(ccUser.getAsset()))));
+                            } else {
+                                onButtonPressed(() -> Toast.makeText(getContext(), listMessage.getMessage() + listMessage.getData(), Toast.LENGTH_SHORT).show());
+                            }
+
+                        }
+                        response.close();
+                    }
+                });
+
+            }
         }
         adapter.setSelectAccount(account);
+
         return contentView;
     }
 
@@ -197,5 +250,7 @@ public class AccountFragment extends Fragment implements AccountAdapter.AccountS
     public Account getAccount() {
         return account;
     }
+
+
 
 }

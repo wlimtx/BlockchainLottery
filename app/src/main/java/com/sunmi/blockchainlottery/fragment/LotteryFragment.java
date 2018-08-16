@@ -1,7 +1,9 @@
 package com.sunmi.blockchainlottery.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sunmi.blockchainlottery.MainActivity;
+import com.sunmi.blockchainlottery.MyApplication;
 import com.sunmi.blockchainlottery.R;
 import com.sunmi.blockchainlottery.adapter.LotteryAdapter;
 import com.sunmi.blockchainlottery.bean.Account;
@@ -72,43 +76,41 @@ public class LotteryFragment extends Fragment {
             System.out.println("update" + mLayoutManager.getChildCount() + ", " + guesses.size());
             if (mLayoutManager.getChildCount() > 1 && guesses.size() > 0) {
                 long diff = (60 * 1000 - (System.currentTimeMillis() -
-                        guesses.get(0).getStartTime().getTime())) / 1000
-                        + 8 * 3600;
-                if (diff < 0) {
-                    //拉取最新发生的数据
-                    updateNew();
-                } else {
-                    mRecyclerView.post(() -> {
-                        View view = mLayoutManager.getChildAt(0).findViewById(R.id.left_time_tv);
-                        if (view != null) ((TextView) view)
-                                .setText(String.valueOf(diff) + "秒后结束投注");
-                    });
-                }
+                        guesses.get(0).getStartTime().getTime())) / 1000;
+                updateNew(diff);
             }
         }, () -> {
-//            if (account != null) {
-//                NetUtil.query(account.getAddress(), new Callback() {
-//                    @Override
-//                    public void onFailure(Call call, IOException e) {
-//                        e.printStackTrace();
-//                        onButtonPressed(() -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
-//                    }
-//
-//                    @Override
-//                    public void onResponse(Call call, Response response) throws IOException {
-//                        if (response.body() != null) {
-//                            String json = response.body().string();
-//
-//                            List<String> data = ((Message<List<String>>) new ObjectMapper()
-//                                    .readValue(json
-//                                            , new TypeReference<Message<List<String>>>() {
-//                                            })).getData();
-//                            ccUser = new ObjectMapper().readValue(data.get(0), CCUser.class);
-//                            mListener.runOnMainThread(() -> asset.setText(String.format("%.2f", Double.valueOf(ccUser.getAsset()))));
-//                        }
-//                    }
-//                });
-//            }
+            if (account != null) {
+                NetUtil.query(account.getAddress(), new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                        onButtonPressed(() -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.body() != null) {
+                            String json = response.body().string();
+
+                            Message<List<String>> listMessage = new ObjectMapper()
+                                    .readValue(json
+                                            , new TypeReference<Message<List<String>>>() {
+                                            });
+                            if (listMessage.getCode() == 200) {
+                                List<String> data = listMessage.getData();
+                                ccUser = new ObjectMapper().readValue(data.get(0), CCUser.class);
+
+                                onButtonPressed(() -> asset.setText(String.format("%.2f", Double.valueOf(ccUser.getAsset()))));
+                            } else {
+                                onButtonPressed(() -> Toast.makeText(getContext(), listMessage.getMessage() + listMessage.getData(), Toast.LENGTH_SHORT).show());
+                            }
+
+                        }
+                        response.close();
+                    }
+                });
+            }
         });
     }
 
@@ -157,7 +159,37 @@ public class LotteryFragment extends Fragment {
             mRecyclerView = contentView.findViewById(R.id.my_recycler_view);
 
 
-            View.OnClickListener onClickListener = v -> DialogUtil.showRechargeDialog(null, (Activity) mListener);
+            View.OnClickListener onClickListener = v -> {
+                Dialog[] dialogs = {null};
+                dialogs[0] = DialogUtil.showRechargeDialog(account.getAddress(), new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                        onButtonPressed(() -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+                        dialogs[0].dismiss();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+                        if (response.body() != null) {
+                            Message<String> message = new Gson().fromJson(response.body().string(),
+                                    new TypeToken<Message<String>>() {
+                                    }.getType());
+                            if (message.getCode() == 200) {
+                                onButtonPressed(() -> Toast.makeText(getContext(),
+                                        "充值成功等待确认:" + message.getData(), Toast.LENGTH_SHORT).show());
+                            } else {
+                                onButtonPressed(() -> Toast.makeText(getContext(),
+                                        "充值失败:" + message.getMessage() + message.getData(), Toast.LENGTH_SHORT).show());
+                            }
+                        }
+                        response.close();
+                        dialogs[0].dismiss();
+                    }
+                }, (Activity) mListener);
+                dialogs[0].show();
+            };
             contentView.findViewById(R.id.recharge).setOnClickListener(onClickListener);
             contentView.findViewById(R.id.recharge_tv).setOnClickListener(onClickListener);
             tv = contentView.findViewById(R.id.nick_name);
@@ -188,7 +220,7 @@ public class LotteryFragment extends Fragment {
 
 
             // specify an adapter (see also next example)
-            mAdapter = new LotteryAdapter(guesses);
+            mAdapter = new LotteryAdapter(guesses, account, this);
             mRecyclerView.setAdapter(mAdapter);
 
             mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -236,6 +268,7 @@ public class LotteryFragment extends Fragment {
 
         tv.setText(account.getName());
         asset.setText(account.getAsset());
+        mAdapter.setAccount(account, this);
 
         return contentView;
     }
@@ -290,10 +323,7 @@ public class LotteryFragment extends Fragment {
     }
 
 
-    private void updateNew() {
-        if (loading) return;
-
-        loadUpStart();
+    private void updateNew(long diff) {
         NetUtil.last(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -305,20 +335,61 @@ public class LotteryFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+
                 if (response.body() != null) {
 
                     Message<String> message = new Gson().fromJson(response.body().string(),
                             new TypeToken<Message<String>>() {
                             }.getType());
                     Guess guess = Guess.fromJson(message.getData());
-                    final long count = guess.getId() - guesses.get(0).getId();
-                    if (count <= 0) {
+                    final long count;
+                    try {
 
-//                        runOnUiThread(() -> Toast.makeText(MainActivity.this, "等待开奖....", Toast.LENGTH_SHORT).show());
-                        loadUpEnd();
+                        count = guess.getId() - guesses.get(0).getId();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                         return;
                     }
-                    NetUtil.pageOf((int) (guess.getId() + 1), (int) count, new Callback() {
+                    if (count <= 0) {
+                        mRecyclerView.post(() -> {
+                            View v = mLayoutManager.getChildAt(0);
+                            View view = v.findViewById(R.id.left_time_tv);
+                            if (view != null) {
+
+
+                                ((TextView) view)
+                                        .setText((diff < 0 ? "0" : String.valueOf(diff)) + "秒后结束投注");
+
+                            }
+                            if (guess.getSumBet() != guesses.get(0).getSumBet()) {
+                                view = v.findViewById(R.id.sum_bet_tv);
+                                if (view != null) ((TextView) view)
+                                        .setText(String.format("%.2f", guess.getSumBet()));
+                            }
+                            TextView bet_action = v.findViewById(R.id.bet_action);
+
+                            String status = ccUser.getStatus();
+                            System.out.println("status: " + "0".equals(status));
+
+                            if (!"0".equals(status)) {
+                                bet_action.setTextColor(Color.rgb(153, 157, 195));
+                                bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_white_all));
+                                bet_action.setText("已投注");
+                                bet_action.setClickable(false);
+                            } else {
+                                bet_action.setTextColor(Color.rgb(255, 247, 247));
+                                bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_color_all));
+                                bet_action.setText("立即投注");
+                                bet_action.setClickable(true);
+                            }
+
+                            response.close();
+                        });
+                        return;
+                    }
+                    if (loading) return;
+                    loadUpStart();
+                    NetUtil.pageOf((int) (guess.getId() + 1), (int) count + 1, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             e.printStackTrace();
@@ -335,10 +406,16 @@ public class LotteryFragment extends Fragment {
                                         }.getType());
                                 List<Guess> list = Guess.fromJsonToList(message.getData());
                                 if (list.size() > 0) {
-                                    for (int i = 0; i < list.size(); i++)
+                                    System.out.println("listsize" + list.size() + ", myguess:" + guess);
+
+                                    guesses.get(0).cloneFrom(list.get(0));
+
+                                    for (int i = 1; i < list.size(); i++)
                                         guesses.add(0, list.get(i));
+
                                     mRecyclerView.post(() -> {
                                         mAdapter.notifyItemRangeInserted(0, list.size());
+
                                         mAdapter.notifyItemChanged(list.size());
 
                                         mRecyclerView.scrollToPosition(0);
@@ -350,6 +427,7 @@ public class LotteryFragment extends Fragment {
                                     loadUpEnd();
                                 }
                             }
+                            response.close();
                         }
                     });
                 }
@@ -396,6 +474,7 @@ public class LotteryFragment extends Fragment {
                         loadEnd();
                     }
                 }
+                response.close();
             }
         });
     }
@@ -421,6 +500,7 @@ public class LotteryFragment extends Fragment {
                                 new TypeToken<Message<String>>() {
                                 }.getType());
                         List<Guess> list = Guess.fromJsonToList(message.getData());
+                        System.out.println("GuessList: " + list);
                         if (list.size() > 0) {
                             int oldSize = guesses.size();
                             for (int i = list.size() - 1; i >= 0; i--) guesses.add(list.get(i));
@@ -439,6 +519,7 @@ public class LotteryFragment extends Fragment {
                             loadEnd();
                         }
                     }
+                    response.close();
                 }
             });
         } catch (Throwable throwable) {
@@ -474,7 +555,7 @@ public class LotteryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Worker.resume(1, 1, 1, 6);
+        Worker.resume(2, 1, 2, 6);
         System.out.println("onResume");
     }
 

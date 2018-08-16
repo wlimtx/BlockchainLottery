@@ -1,5 +1,9 @@
 package com.sunmi.blockchainlottery.adapter;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,15 +11,37 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.sunmi.blockchainlottery.MyApplication;
 import com.sunmi.blockchainlottery.R;
+import com.sunmi.blockchainlottery.bean.Account;
+import com.sunmi.blockchainlottery.bean.Message;
+import com.sunmi.blockchainlottery.fragment.LotteryFragment;
 import com.sunmi.blockchainlottery.item.Guess;
+import com.sunmi.blockchainlottery.util.DialogUtil;
 
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Guess> guesses;
+    private LotteryFragment lotteryFragment;
+
+    public void setAccount(Account account, LotteryFragment lotteryFragment) {
+
+        this.account = account;
+        this.lotteryFragment = lotteryFragment;
+
+    }
+
 
 
     // Provide a reference to the views for each data item
@@ -45,11 +71,15 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public LotteryAdapter(List<Guess> guessList) {
+    public LotteryAdapter(List<Guess> guessList, Account account, LotteryFragment lotteryFragment) {
 
         guesses = guessList;
+        this.account = account;
+        this.lotteryFragment = lotteryFragment;
     }
 
+
+    private Account account;
     // Create new views (invoked by the layout manager)
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -75,6 +105,8 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         throw new RuntimeException("not null");
     }
 
+    private View.OnClickListener onClickListener;
+
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -86,20 +118,71 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             + guess.getStartTime().getDate() + "日第"
                             + guess.getId() + "轮竞猜");
             vh.status_tv.setText(guess.isOver() ? "竞猜结束" : "竞猜中");
+            System.out.println("sumBet: " + guess.getSumBet());
+
             vh.sum_bet_tv.setText(String.format("%.2f", guess.getSumBet()));
+
 
 
             if (position == 0) {
                 vh.award_layout.setVisibility(View.GONE);
                 vh.left_time_tv.setVisibility(View.VISIBLE);
                 vh.bet_action.setVisibility(View.VISIBLE);
-                long diff = (60 * 1000 - System.currentTimeMillis() + guess.getStartTime().getTime()) / 1000 + 8 * 3600;
+                setUnClickable(vh.bet_action);
+                long diff = (60 * 1000 - System.currentTimeMillis() + guess.getStartTime().getTime()) / 1000 + 8;
                 if (diff < 0) diff = 0;
                 vh.left_time_tv.setText(String.valueOf(diff) + "秒后结束投注");
+                vh.bet_action.setOnClickListener( v -> {
+                    Dialog[] dialogs = {null};
+                    dialogs[0] = DialogUtil.showBetDialog(account, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            e.printStackTrace();
+                            lotteryFragment.onButtonPressed(() -> Toast.makeText(lotteryFragment.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+                            dialogs[0].dismiss();
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            if (response.body() != null) {
+                                Message<String> message = new Gson().fromJson(response.body().string(),
+                                        new TypeToken<Message<String>>() {
+                                        }.getType());
+                                if (message.getCode() == 200) {
+                                    lotteryFragment.onButtonPressed(() -> {
+                                        setUnClickable(vh.bet_action);
+                                        Toast.makeText(lotteryFragment.getContext(),
+                                                "投注成功等待确认:" + message.getData(), Toast.LENGTH_SHORT).show();
+                                    });
+
+                                } else {
+
+                                    lotteryFragment.onButtonPressed(() -> Toast.makeText(lotteryFragment.getContext(),
+                                            "投注失败:" + message.getMessage() + message.getData(), Toast.LENGTH_SHORT).show());
+                                    System.out.println(message.getMessage() + ", " + message.getData());
+                                }
+                            }
+                            response.close();
+                            dialogs[0].dismiss();
+                        }
+                    }, (Activity) lotteryFragment.getContext());
+
+                    dialogs[0].show();
+                });
+
             } else {
                 vh.left_time_tv.setVisibility(View.GONE);
                 vh.bet_action.setVisibility(View.GONE);
+                vh.bet_action.setOnClickListener(null);
                 vh.award_layout.setVisibility(View.VISIBLE);
+                System.out.println("account.getAddress"+account.getAddress());
+                System.out.println("winner"+guess.getWinner());
+                if (account.getAddress() != null && account.getAddress().equals(guess.getWinner())) {
+                    vh.award.setText(String.valueOf(guess.getAward()));
+                } else {
+                    vh.award.setText("0.00");
+                }
+
             }
 
 
@@ -164,5 +247,12 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void changeMoreStatus(int status) {
         load_more_status = status;
         notifyItemChanged(getItemCount() - 1);
+    }
+
+    private void setUnClickable(TextView bet_action) {
+        bet_action.setTextColor(Color.rgb(153, 157, 195));
+        bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_white_all));
+        bet_action.setText("已投注");
+        bet_action.setClickable(false);
     }
 }

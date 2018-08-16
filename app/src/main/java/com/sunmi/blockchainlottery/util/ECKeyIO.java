@@ -1,6 +1,7 @@
 package com.sunmi.blockchainlottery.util;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.sunmi.blockchainlottery.MainActivity;
 import com.sunmi.blockchainlottery.bean.Account;
@@ -17,6 +18,7 @@ import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
 import java.security.spec.ECPoint;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -181,6 +183,17 @@ public class ECKeyIO {
         } else {
             for (File file : files) if (file.getName().endsWith("#" + name)) return read(file);
             return read(files[0]);
+        }
+    }
+
+    public static Account loadAccount(Context context) {
+        try {
+            return ECKeyIO.readByName(context, Constant.getLastSelectAccountName(context));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, "密钥读取失败", Toast.LENGTH_SHORT).show();
+            DialogUtil.showExitDialog(context, Arrays.toString(e.getStackTrace()));
+            return null;
         }
     }
 }

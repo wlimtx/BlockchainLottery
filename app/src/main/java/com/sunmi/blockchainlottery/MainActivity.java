@@ -41,15 +41,11 @@ public class MainActivity extends AppCompatActivity implements
         TextView account_tv;
         account_tv = findViewById(R.id.account_tv);
 
-        try {
-            account = loadAccount();
-            lotteryFragment.setAccount(account);
-            setFragment(lotteryFragment);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "密钥读取失败", Toast.LENGTH_SHORT).show();
-            DialogUtil.showExitDialog(this, Arrays.toString(e.getStackTrace()));
-        }
+
+        account = ECKeyIO.loadAccount(this);
+        lotteryFragment.setAccount(account);
+        setFragment(lotteryFragment);
+
 
         lottery_tv.setOnClickListener(view -> {
             lottery_tv.setTextColor(Color.rgb(255, 255, 255));
@@ -69,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements
         });
 
 
-
     }
 
     private void setFragment(Fragment lotteryFragment) {
@@ -81,9 +76,7 @@ public class MainActivity extends AppCompatActivity implements
         runOnUiThread(runnable);
     }
 
-    private Account loadAccount() throws Exception {
-        return ECKeyIO.readByName(this, Constant.getLastSelectAccountName(this));
-    }
+
 
 
 }

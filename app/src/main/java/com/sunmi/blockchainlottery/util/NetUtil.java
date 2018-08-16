@@ -2,7 +2,14 @@ package com.sunmi.blockchainlottery.util;
 
 
 
+import com.sunmi.blockchainlottery.bean.Account;
+import com.sunmi.sdk.chaincode.LotteryUtil;
+
+import org.bouncycastle.util.encoders.Hex;
+
+import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -68,6 +75,34 @@ public class NetUtil {
                 .append("\"}");
         String httpsURL = baseHttpUrl + "api/blockchain/fabric/v1/query";
         post(httpsURL, json.toString(), callback);
+    }
 
+    public static void transfer(Account account, double money, String receiveAddress, Callback callback) throws Exception {
+        String[] transferArgs = LotteryUtil
+                .transfer(String.valueOf(money), receiveAddress,
+                        account.getPk(), account.getSk());
+
+        String args = "{\"args\":" + Arrays.toString(transferArgs).replaceAll("(\\w++)", "\\\"$1\\\"") + ",\"token\":\""
+                + ValidToken + "\"}";
+        System.out.println(args);
+        String httpsURL = baseHttpUrl + "api/blockchain/fabric/v1/invoke";
+        System.out.println(httpsURL);
+        post(httpsURL, args, callback);
+    }
+    public static void bet(Account account, double wager, Callback callback) throws Exception {
+        String[] transferArgs = LotteryUtil
+                .bet(String.valueOf(wager), Hex.toHexString(PemUtil.randomBytes()),
+                        account.getPk(), account.getSk());
+
+        String args = "{\"args\":" + Arrays.toString(transferArgs).replaceAll("([\\w.]++)", "\\\"$1\\\"") + ",\"token\":\""
+                + ValidToken + "\"}";
+        System.out.println(args);
+        String httpsURL = baseHttpUrl + "api/blockchain/fabric/v1/invoke";
+        System.out.println(httpsURL);
+        post(httpsURL, args, callback);
+    }
+
+    public static void recharge(String address, double money, Callback callback) {
+        get(baseHttpUrl + "recharge?address=" + address + "&money=" + money, callback);
     }
 }

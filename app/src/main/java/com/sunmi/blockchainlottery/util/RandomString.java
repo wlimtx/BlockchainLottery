@@ -22,11 +22,11 @@ public class RandomString extends Random {
         StringBuilder sb = nextWord(new StringBuilder(), randomString.nextInt(5) + 2);
         for (n--; n > 0; n--) {
             sb.append(' ');
-            nextWord(sb, randomString.nextInt(5) + 2);
+            nextWord(sb, randomString.nextInt(3) + 2);
         }
         return sb;
     }
     public static StringBuilder nextName() {
-        return nextName(randomString.nextInt(3) + 1);
+        return nextName(randomString.nextInt(2) + 1);
     }
 }

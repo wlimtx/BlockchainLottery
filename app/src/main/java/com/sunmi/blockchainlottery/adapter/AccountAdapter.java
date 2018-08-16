@@ -7,13 +7,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.WriterException;
 import com.sunmi.blockchainlottery.R;
 import com.sunmi.blockchainlottery.bean.Account;
+import com.sunmi.blockchainlottery.bean.CCUser;
+import com.sunmi.blockchainlottery.bean.Message;
+import com.sunmi.blockchainlottery.fragment.AccountFragment;
+import com.sunmi.blockchainlottery.util.ECKeyIO;
+import com.sunmi.blockchainlottery.util.NetUtil;
 import com.uuzuche.lib_zxing.encoding.EncodingHandler;
 
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -31,6 +44,8 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Account selectAccount;
 
     public Account getSelectAccount() {
+        if (selectAccount == null)
+            selectAccount = ECKeyIO.loadAccount(((AccountFragment) accountSelectListener).getContext());
         return selectAccount;
     }
 
@@ -99,6 +114,7 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } catch (WriterException e) {
             e.printStackTrace();
         }
+
         viewHolder.itemView.setOnClickListener(v -> {
             if (accountUseFlag != viewHolder.account_flag) {
                 accountUseFlag.setVisibility(View.GONE);
@@ -108,11 +124,50 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 accountSelectListener.onSelect(getSelectAccount());
             }
         });
-
+        query(accounts.get(position).getAddress(), viewHolder.asset);
     }
 
     @Override
     public int getItemCount() {
         return accounts.size();
+    }
+
+    public void query(String address, TextView view) {
+        NetUtil.query(address, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                ((AccountFragment) accountSelectListener).onButtonPressed(() -> Toast
+                        .makeText(((AccountFragment) accountSelectListener)
+                                .getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.body() != null) {
+                    String json = response.body().string();
+
+
+
+                    Message<List<String>> listMessage = new ObjectMapper()
+                            .readValue(json
+                                    , new TypeReference<Message<List<String>>>() {
+                                    });
+                    if (listMessage.getCode() == 200) {
+                        List<String> data = listMessage.getData();
+                        CCUser ccUser = new ObjectMapper().readValue(data.get(0), CCUser.class);
+
+                        ((AccountFragment) accountSelectListener).onButtonPressed(() -> view.setText(String.format("%.2f", Double.valueOf(ccUser.getAsset()))));
+                    } else {
+                        ((AccountFragment) accountSelectListener).onButtonPressed(() -> Toast.makeText( ((AccountFragment) accountSelectListener)
+                                .getContext(), listMessage.getMessage() + listMessage.getData(), Toast.LENGTH_SHORT).show());
+
+
+                    }
+
+                }
+                response.close();
+            }
+        });
     }
 }

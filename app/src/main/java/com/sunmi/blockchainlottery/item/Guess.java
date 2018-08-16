@@ -138,4 +138,12 @@ public class Guess {
                 ", isOver=" + over +
                 '}';
     }
+
+    public void cloneFrom(Guess guess) {
+        setAward(guess.award);
+        setFee(guess.fee);
+        setOver(guess.over);
+        setSumBet(guess.sumBet);
+        setWinner(guess.winner);
+    }
 }
