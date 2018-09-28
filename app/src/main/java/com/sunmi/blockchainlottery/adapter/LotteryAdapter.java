@@ -29,6 +29,7 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -128,8 +129,9 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 vh.award_layout.setVisibility(View.GONE);
                 vh.left_time_tv.setVisibility(View.VISIBLE);
                 vh.bet_action.setVisibility(View.VISIBLE);
-                setUnClickable(vh.bet_action);
-                long diff = (60 * 1000 - System.currentTimeMillis() + guess.getStartTime().getTime()) / 1000 + 8;
+
+//                setUnClickable(vh.bet_action);
+                long diff = (60 * 1000 - System.currentTimeMillis() + guess.getStartTime().getTime()) / 1000;
                 if (diff < 0) diff = 0;
                 vh.left_time_tv.setText(String.valueOf(diff) + "秒后结束投注");
                 vh.bet_action.setOnClickListener( v -> {
@@ -144,13 +146,15 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
-                            if (response.body() != null) {
-                                Message<String> message = new Gson().fromJson(response.body().string(),
+                            ResponseBody body = response.body();
+                            response.close();
+                            if (body != null) {
+                                Message<String> message = new Gson().fromJson(body.string(),
                                         new TypeToken<Message<String>>() {
                                         }.getType());
                                 if (message.getCode() == 200) {
                                     lotteryFragment.onButtonPressed(() -> {
-                                        setUnClickable(vh.bet_action);
+//                                        setUnClickable(vh.bet_action);
                                         Toast.makeText(lotteryFragment.getContext(),
                                                 "投注成功等待确认:" + message.getData(), Toast.LENGTH_SHORT).show();
                                     });
@@ -162,7 +166,7 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                     System.out.println(message.getMessage() + ", " + message.getData());
                                 }
                             }
-                            response.close();
+
                             dialogs[0].dismiss();
                         }
                     }, (Activity) lotteryFragment.getContext());
@@ -175,8 +179,8 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 vh.bet_action.setVisibility(View.GONE);
                 vh.bet_action.setOnClickListener(null);
                 vh.award_layout.setVisibility(View.VISIBLE);
-                System.out.println("account.getAddress"+account.getAddress());
-                System.out.println("winner"+guess.getWinner());
+                System.out.println("account.getAddress" + account.getAddress());
+                System.out.println("winner" + guess.getWinner());
                 if (account.getAddress() != null && account.getAddress().equals(guess.getWinner())) {
                     vh.award.setText(String.valueOf(guess.getAward()));
                 } else {
@@ -208,7 +212,7 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return guesses.size() + 1;
     }
 
-    private static final int TYPE_ITEM =0;  //普通Item View
+    private static final int TYPE_ITEM = 0;  //普通Item View
 
     private static final int TYPE_FOOTER = 1;  //底部FootView
 

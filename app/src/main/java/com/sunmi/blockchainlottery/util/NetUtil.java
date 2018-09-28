@@ -20,10 +20,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class NetUtil {
-    public static final String ValidToken = "12a8181e05ff132db462448a1785c09bdd8a7456ac795f70646a24847ab06d46";
+    public static final String ValidToken = "0b3824a5d89c121fa6f939d98f218b8233d2a1e8e0050723d29adbc73d0209cf";
 
     public static final String baseHttpUrl
-            = "http://172.16.2.198:8888/";
+            = "http://47.105.136.1:8888/";
 
     public static void last(Callback callback) {
         get(baseHttpUrl + "last", callback);

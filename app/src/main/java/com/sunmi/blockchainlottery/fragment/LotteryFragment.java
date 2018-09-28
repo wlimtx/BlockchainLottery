@@ -39,10 +39,13 @@ import com.sunmi.blockchainlottery.util.Worker;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class LotteryFragment extends Fragment {
 
@@ -56,7 +59,8 @@ public class LotteryFragment extends Fragment {
 
     ProgressBar upPb;
 
-    private CCUser ccUser = new CCUser();
+    BlockingQueue<CCUser> seq = new LinkedBlockingQueue<>();
+//    private CCUser ccUser = new CCUser();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -91,9 +95,10 @@ public class LotteryFragment extends Fragment {
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        if (response.body() != null) {
-                            String json = response.body().string();
-
+                        ResponseBody body = response.body();
+                        response.close();
+                        if (body != null) {
+                            String json = body.string();
                             Message<List<String>> listMessage = new ObjectMapper()
                                     .readValue(json
                                             , new TypeReference<Message<List<String>>>() {
@@ -104,16 +109,16 @@ public class LotteryFragment extends Fragment {
                                     onButtonPressed(() -> Toast.makeText(getContext(), "blockchain network exception", Toast.LENGTH_SHORT).show());
                                     return;
                                 }
-                                ccUser = new ObjectMapper().readValue(data.get(0), CCUser.class);
-
-                                account.setAsset(ccUser.getAsset());
-                                onButtonPressed(() -> asset.setText(String.format("%.2f", Double.valueOf(ccUser.getAsset()))));
+                                while (!seq.isEmpty()) {
+                                    seq.poll();
+                                }
+                                seq.add(new ObjectMapper().readValue(data.get(0), CCUser.class));
+                                account.setAsset(seq.peek().getAsset());
+                                onButtonPressed(() -> asset.setText(String.format("%.2f", Double.valueOf(seq.peek().getAsset()))));
                             } else {
                                 onButtonPressed(() -> Toast.makeText(getContext(), listMessage.getMessage() + listMessage.getData(), Toast.LENGTH_SHORT).show());
                             }
-
                         }
-                        response.close();
                     }
                 });
             }
@@ -156,6 +161,7 @@ public class LotteryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         System.out.println("onCreateView");
         if (contentView == null) {
             System.out.println("create new view");
@@ -178,8 +184,10 @@ public class LotteryFragment extends Fragment {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
 
-                        if (response.body() != null) {
-                            Message<String> message = new Gson().fromJson(response.body().string(),
+                        ResponseBody body = response.body();
+                        response.close();
+                        if (body != null) {
+                            Message<String> message = new Gson().fromJson(body.string(),
                                     new TypeToken<Message<String>>() {
                                     }.getType());
                             if (message.getCode() == 200) {
@@ -190,7 +198,7 @@ public class LotteryFragment extends Fragment {
                                         "充值失败:" + message.getMessage() + message.getData(), Toast.LENGTH_SHORT).show());
                             }
                         }
-                        response.close();
+
                         dialogs[0].dismiss();
                     }
                 }, (Activity) mListener);
@@ -213,8 +221,10 @@ public class LotteryFragment extends Fragment {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
 
-                        if (response.body() != null) {
-                            Message<String> message = new Gson().fromJson(response.body().string(),
+                        ResponseBody body = response.body();
+                        response.close();
+                        if (body != null) {
+                            Message<String> message = new Gson().fromJson(body.string(),
                                     new TypeToken<Message<String>>() {
                                     }.getType());
                             if (message.getCode() == 200) {
@@ -225,7 +235,6 @@ public class LotteryFragment extends Fragment {
                                         "转账失败:" + message.getMessage() + message.getData(), Toast.LENGTH_SHORT).show());
                             }
                         }
-                        response.close();
                         dialogs.dismiss();
                     }
                 });
@@ -311,7 +320,7 @@ public class LotteryFragment extends Fragment {
 
         if (account != null) {
             tv.setText(account.getName());
-            asset.setText(account.getAsset());
+            asset.setText(String.format("%.2f", Double.valueOf(account.getAsset())));
             mAdapter.setAccount(account, this);
 
         }
@@ -342,6 +351,7 @@ public class LotteryFragment extends Fragment {
         System.out.println("onDetach");
         super.onDetach();
         mListener = null;
+        guesses.clear();
     }
 
     public List<Guess> getGuesses() {
@@ -382,20 +392,22 @@ public class LotteryFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
 
-                if (response.body() != null) {
+                ResponseBody body = response.body();
+                response.close();
+                if (body != null) {
 
-                    Message<String> message = new Gson().fromJson(response.body().string(),
+                    Message<String> message = new Gson().fromJson(body.string(),
                             new TypeToken<Message<String>>() {
                             }.getType());
                     Guess guess = Guess.fromJson(message.getData());
                     final long count;
                     try {
-
                         count = guess.getId() - guesses.get(0).getId();
                     } catch (Exception e) {
                         e.printStackTrace();
                         return;
                     }
+
                     if (count <= 0) {
                         mRecyclerView.post(() -> {
                             try {
@@ -415,24 +427,14 @@ public class LotteryFragment extends Fragment {
                                 }
                                 TextView bet_action = v.findViewById(R.id.bet_action);
 
-                                String status = ccUser.getStatus();
+                                String status = seq.peek().getStatus();
                                 System.out.println("status: " + "0".equals(status));
 
-                                if (!"0".equals(status)) {
-                                    bet_action.setTextColor(Color.rgb(153, 157, 195));
-                                    bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_white_all));
-                                    bet_action.setText("已投注");
-                                    bet_action.setClickable(false);
-                                } else {
-                                    bet_action.setTextColor(Color.rgb(255, 247, 247));
-                                    bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_color_all));
-                                    bet_action.setText("立即投注");
-                                    bet_action.setClickable(true);
-                                }
+                                judgeStatus(bet_action, seq.peek());
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            response.close();
+
                         });
 
                         return;
@@ -450,8 +452,10 @@ public class LotteryFragment extends Fragment {
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
-                            if (response.body() != null) {
-                                Message<String> message = new Gson().fromJson(response.body().string(),
+                            ResponseBody body1 = response.body();
+                            response.close();
+                            if (body1 != null) {
+                                Message<String> message = new Gson().fromJson(body1.string(),
                                         new TypeToken<Message<String>>() {
                                         }.getType());
                                 List<Guess> list = Guess.fromJsonToList(message.getData());
@@ -477,13 +481,27 @@ public class LotteryFragment extends Fragment {
                                     loadUpEnd();
                                 }
                             }
-                            response.close();
+
                         }
                     });
                 }
             }
         });
     }
+    private void judgeStatus(TextView bet_action, CCUser ccUser) {
+        if (!"0".equals(ccUser.getStatus())) {
+            bet_action.setTextColor(Color.rgb(153, 157, 195));
+            bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_white_all));
+            bet_action.setText("已投注");
+            bet_action.setClickable(false);
+        } else {
+            bet_action.setTextColor(Color.rgb(255, 247, 247));
+            bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_color_all));
+            bet_action.setText("立即投注");
+            bet_action.setClickable(true);
+        }
+    }
+
 
 
     private void initData(int count) {
@@ -500,17 +518,21 @@ public class LotteryFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response.body() != null) {
+                ResponseBody body = response.body();
+                response.close();
+                if (body != null) {
 
-                    Message<String> message = new Gson().fromJson(response.body().string(),
+                    Message<String> message = new Gson().fromJson(body.string(),
                             new TypeToken<Message<String>>() {
                             }.getType());
                     Guess guess = Guess.fromJson(message.getData());
                     //如果服务器没有数据，那么guess就是null
                     if (guess != null) {
                         guesses.add(guess);
+                        View v = mLayoutManager.getChildAt(0);
+                        TextView bet_action = v.findViewById(R.id.bet_action);
                         mRecyclerView.post(() -> mAdapter.notifyItemInserted(0));
-
+                        judgeStatus(bet_action, seq.peek());
                         try {
                             Thread.sleep(600);
                         } catch (InterruptedException e) {
@@ -524,7 +546,6 @@ public class LotteryFragment extends Fragment {
                         loadEnd();
                     }
                 }
-                response.close();
             }
         });
     }
@@ -545,8 +566,10 @@ public class LotteryFragment extends Fragment {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    if (response.body() != null) {
-                        Message<String> message = new Gson().fromJson(response.body().string(),
+                    ResponseBody body = response.body();
+                    response.close();
+                    if (body != null) {
+                        Message<String> message = new Gson().fromJson(body.string(),
                                 new TypeToken<Message<String>>() {
                                 }.getType());
                         List<Guess> list = Guess.fromJsonToList(message.getData());
@@ -569,7 +592,6 @@ public class LotteryFragment extends Fragment {
                             loadEnd();
                         }
                     }
-                    response.close();
                 }
             });
         } catch (Throwable throwable) {
