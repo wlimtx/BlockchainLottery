@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,9 +29,7 @@ import com.sunmi.blockchainlottery.bean.CCUser;
 import com.sunmi.blockchainlottery.bean.Message;
 import com.sunmi.blockchainlottery.component.TransferDialog;
 import com.sunmi.blockchainlottery.item.Guess;
-import com.sunmi.blockchainlottery.util.Constant;
 import com.sunmi.blockchainlottery.util.DialogUtil;
-import com.sunmi.blockchainlottery.util.ECKeyIO;
 import com.sunmi.blockchainlottery.util.NetUtil;
 import com.sunmi.blockchainlottery.util.Worker;
 
@@ -59,8 +56,8 @@ public class LotteryFragment extends Fragment {
 
     ProgressBar upPb;
 
-    BlockingQueue<CCUser> seq = new LinkedBlockingQueue<>();
-//    private CCUser ccUser = new CCUser();
+    public BlockingQueue<CCUser> seq;
+//    private CCUser ccUserRunnable = new CCUser();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,11 +69,38 @@ public class LotteryFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    private Account account;
+    private BlockingQueue<Account> account;
 
+    Runnable ccUserRunnable;
     public LotteryFragment() {
         // Required empty public constructor
         System.out.println("new fragment");
+        account = new LinkedBlockingQueue<Account>(){
+            @Override
+            public Account peek() {
+                try {
+                    Account take = take();
+                    add(take);
+                    return take;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        seq = new LinkedBlockingQueue<CCUser>(){
+            @Override
+            public CCUser peek() {
+                try {
+                    CCUser take = take();
+                    add(take);
+                    return take;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
         Worker.setJob(() -> {
             System.out.println("update" + mLayoutManager.getChildCount() + ", " + guesses.size());
             if (mLayoutManager.getChildCount() > 1 && guesses.size() > 0) {
@@ -84,46 +108,13 @@ public class LotteryFragment extends Fragment {
                         guesses.get(0).getStartTime().getTime())) / 1000;
                 updateNew(diff);
             }
-        }, () -> {
-            if (account != null) {
-                NetUtil.query(account.getAddress(), new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        e.printStackTrace();
-                        onButtonPressed(() -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        ResponseBody body = response.body();
-                        response.close();
-                        if (body != null) {
-                            String json = body.string();
-                            Message<List<String>> listMessage = new ObjectMapper()
-                                    .readValue(json
-                                            , new TypeReference<Message<List<String>>>() {
-                                            });
-                            if (listMessage.getCode() == 200) {
-                                List<String> data = listMessage.getData();
-                                if (data.size() == 0) {
-                                    onButtonPressed(() -> Toast.makeText(getContext(), "blockchain network exception", Toast.LENGTH_SHORT).show());
-                                    return;
-                                }
-                                while (!seq.isEmpty()) {
-                                    seq.poll();
-                                }
-                                seq.add(new ObjectMapper().readValue(data.get(0), CCUser.class));
-                                account.setAsset(seq.peek().getAsset());
-                                onButtonPressed(() -> asset.setText(String.format("%.2f", Double.valueOf(seq.peek().getAsset()))));
-                            } else {
-                                onButtonPressed(() -> Toast.makeText(getContext(), listMessage.getMessage() + listMessage.getData(), Toast.LENGTH_SHORT).show());
-                            }
-                        }
-                    }
-                });
-            }
-        });
+        }, null);
     }
+
+    public void updateCCUser() {
+        new Thread(ccUserRunnable).start();
+    }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -152,6 +143,65 @@ public class LotteryFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+        ccUserRunnable = () -> {
+            System.out.println("account: " + account);
+            if (account != null) {
+                NetUtil.query(account.peek().getAddress(), new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                        onButtonPressed(() -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        ResponseBody body = response.body();
+
+                        if (body != null) {
+                            String json = body.string();
+                            Message<List<String>> listMessage = new ObjectMapper()
+                                    .readValue(json
+                                            , new TypeReference<Message<List<String>>>() {
+                                            });
+                            if (listMessage.getCode() == 200) {
+                                List<String> data = listMessage.getData();
+                                if (data.size() == 0) {
+                                    onButtonPressed(() -> Toast.makeText(getContext(), "blockchain network exception", Toast.LENGTH_SHORT).show());
+                                    return;
+                                }
+                                while (!seq.isEmpty()) {
+                                    try {
+                                        seq.take();
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                System.out.println("seq size: " + seq.size());
+                                seq.add(new ObjectMapper().readValue(data.get(0), CCUser.class));
+                                String asset = seq.peek().getAsset();
+                                System.out.println("asset: " + asset);
+                                account.peek().setAsset(asset);
+                                onButtonPressed(() -> {
+                                    LotteryFragment.this.asset.setText(String.format("%.2f", Double.valueOf(asset)));
+                                    View childAt = mLayoutManager.getChildAt(0);
+                                    if (childAt != null)
+                                        judgeStatus(childAt.findViewById(R.id.bet_action));
+                                });
+
+
+
+                            } else {
+                                onButtonPressed(() -> Toast.makeText(getContext(), listMessage.getMessage() + listMessage.getData(), Toast.LENGTH_SHORT).show());
+                            }
+                        }
+                        response.close();
+                    }
+                });
+            }
+        };
+        updateCCUser();
     }
 
     private View contentView;
@@ -162,6 +212,7 @@ public class LotteryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        seq.clear();
         System.out.println("onCreateView");
         if (contentView == null) {
             System.out.println("create new view");
@@ -173,7 +224,7 @@ public class LotteryFragment extends Fragment {
 
             View.OnClickListener onClickListener = v -> {
                 Dialog[] dialogs = {null};
-                dialogs[0] = DialogUtil.showRechargeDialog(account.getAddress(), new Callback() {
+                dialogs[0] = DialogUtil.showRechargeDialog(account.peek().getAddress(), new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         e.printStackTrace();
@@ -185,7 +236,7 @@ public class LotteryFragment extends Fragment {
                     public void onResponse(Call call, Response response) throws IOException {
 
                         ResponseBody body = response.body();
-                        response.close();
+
                         if (body != null) {
                             Message<String> message = new Gson().fromJson(body.string(),
                                     new TypeToken<Message<String>>() {
@@ -193,12 +244,18 @@ public class LotteryFragment extends Fragment {
                             if (message.getCode() == 200) {
                                 onButtonPressed(() -> Toast.makeText(getContext(),
                                         "充值成功等待确认:" + message.getData(), Toast.LENGTH_SHORT).show());
+                                try {
+                                    Thread.sleep(5000);
+                                    updateCCUser();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             } else {
                                 onButtonPressed(() -> Toast.makeText(getContext(),
                                         "充值失败:" + message.getMessage() + message.getData(), Toast.LENGTH_SHORT).show());
                             }
                         }
-
+                        response.close();
                         dialogs[0].dismiss();
                     }
                 }, (Activity) mListener);
@@ -210,7 +267,7 @@ public class LotteryFragment extends Fragment {
             View.OnClickListener onClickListener2 = v2 -> {
 
                 TransferDialog dialogs = new TransferDialog();
-                dialogs.setWorker(account, new Callback() {
+                dialogs.setWorker(account.peek(), new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         e.printStackTrace();
@@ -222,7 +279,7 @@ public class LotteryFragment extends Fragment {
                     public void onResponse(Call call, Response response) throws IOException {
 
                         ResponseBody body = response.body();
-                        response.close();
+
                         if (body != null) {
                             Message<String> message = new Gson().fromJson(body.string(),
                                     new TypeToken<Message<String>>() {
@@ -230,11 +287,21 @@ public class LotteryFragment extends Fragment {
                             if (message.getCode() == 200) {
                                 onButtonPressed(() -> Toast.makeText(getContext(),
                                         "转账成功等待确认:" + message.getData(), Toast.LENGTH_SHORT).show());
+                                response.close();
+                                dialogs.dismiss();
+                                try {
+                                    Thread.sleep(5000);
+                                    updateCCUser();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                return;
                             } else {
                                 onButtonPressed(() -> Toast.makeText(getContext(),
                                         "转账失败:" + message.getMessage() + message.getData(), Toast.LENGTH_SHORT).show());
                             }
                         }
+                        response.close();
                         dialogs.dismiss();
                     }
                 });
@@ -272,7 +339,7 @@ public class LotteryFragment extends Fragment {
 
 
             // specify an adapter (see also next example)
-            mAdapter = new LotteryAdapter(guesses, account, this);
+            mAdapter = new LotteryAdapter(guesses, account.peek(), this);
             mRecyclerView.setAdapter(mAdapter);
 
             mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -319,9 +386,9 @@ public class LotteryFragment extends Fragment {
         }
 
         if (account != null) {
-            tv.setText(account.getName());
-            asset.setText(String.format("%.2f", Double.valueOf(account.getAsset())));
-            mAdapter.setAccount(account, this);
+            tv.setText(account.peek().getName());
+            asset.setText(String.format("%.2f", Double.valueOf(account.peek().getAsset())));
+            mAdapter.setAccount(account.peek(), this);
 
         }
 
@@ -359,8 +426,14 @@ public class LotteryFragment extends Fragment {
     }
 
     public void setAccount(Account account) {
-
-        this.account = account;
+        while (!this.account.isEmpty()) {
+            try {
+                this.account.take();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        this.account.add(account);
     }
 
     /**
@@ -393,7 +466,7 @@ public class LotteryFragment extends Fragment {
             public void onResponse(Call call, Response response) throws IOException {
 
                 ResponseBody body = response.body();
-                response.close();
+
                 if (body != null) {
 
                     Message<String> message = new Gson().fromJson(body.string(),
@@ -412,6 +485,7 @@ public class LotteryFragment extends Fragment {
                         mRecyclerView.post(() -> {
                             try {
                                 View v = mLayoutManager.getChildAt(0);
+
                                 View view = v.findViewById(R.id.left_time_tv);
                                 if (view != null) {
 
@@ -425,22 +499,23 @@ public class LotteryFragment extends Fragment {
                                     if (view != null) ((TextView) view)
                                             .setText(String.format("%.2f", guess.getSumBet()));
                                 }
-                                TextView bet_action = v.findViewById(R.id.bet_action);
+//                                TextView bet_action = v.findViewById(R.id.bet_action);
 
                                 String status = seq.peek().getStatus();
                                 System.out.println("status: " + "0".equals(status));
 
-                                judgeStatus(bet_action, seq.peek());
+//                                judgeStatus(bet_action);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
                         });
-
+                        response.close();
                         return;
                     }
                     if (loading) return;
                     loadUpStart();
+                    updateCCUser();
                     NetUtil.pageOf((int) (guess.getId() + 1), (int) count + 1, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
@@ -453,7 +528,7 @@ public class LotteryFragment extends Fragment {
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             ResponseBody body1 = response.body();
-                            response.close();
+
                             if (body1 != null) {
                                 Message<String> message = new Gson().fromJson(body1.string(),
                                         new TypeToken<Message<String>>() {
@@ -481,25 +556,29 @@ public class LotteryFragment extends Fragment {
                                     loadUpEnd();
                                 }
                             }
-
+                            response.close();
                         }
                     });
+                    response.close();
                 }
             }
         });
     }
-    private void judgeStatus(TextView bet_action, CCUser ccUser) {
-        if (!"0".equals(ccUser.getStatus())) {
-            bet_action.setTextColor(Color.rgb(153, 157, 195));
-            bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_white_all));
-            bet_action.setText("已投注");
-            bet_action.setClickable(false);
-        } else {
-            bet_action.setTextColor(Color.rgb(255, 247, 247));
-            bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_color_all));
-            bet_action.setText("立即投注");
-            bet_action.setClickable(true);
-        }
+
+    public void judgeStatus(TextView bet_action) {
+
+        if (bet_action != null)
+            if (!"0".equals(seq.peek().getStatus())) {
+                bet_action.setTextColor(Color.rgb(153, 157, 195));
+                bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_white_all));
+                bet_action.setText("已投注");
+                bet_action.setClickable(false);
+            } else {
+                bet_action.setTextColor(Color.rgb(255, 247, 247));
+                bet_action.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.corner_color_all));
+                bet_action.setText("立即投注");
+                bet_action.setClickable(true);
+            }
     }
 
 
@@ -519,7 +598,7 @@ public class LotteryFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 ResponseBody body = response.body();
-                response.close();
+
                 if (body != null) {
 
                     Message<String> message = new Gson().fromJson(body.string(),
@@ -529,10 +608,7 @@ public class LotteryFragment extends Fragment {
                     //如果服务器没有数据，那么guess就是null
                     if (guess != null) {
                         guesses.add(guess);
-                        View v = mLayoutManager.getChildAt(0);
-                        TextView bet_action = v.findViewById(R.id.bet_action);
                         mRecyclerView.post(() -> mAdapter.notifyItemInserted(0));
-                        judgeStatus(bet_action, seq.peek());
                         try {
                             Thread.sleep(600);
                         } catch (InterruptedException e) {
@@ -546,6 +622,7 @@ public class LotteryFragment extends Fragment {
                         loadEnd();
                     }
                 }
+                response.close();
             }
         });
     }
@@ -567,7 +644,7 @@ public class LotteryFragment extends Fragment {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     ResponseBody body = response.body();
-                    response.close();
+
                     if (body != null) {
                         Message<String> message = new Gson().fromJson(body.string(),
                                 new TypeToken<Message<String>>() {
@@ -592,6 +669,7 @@ public class LotteryFragment extends Fragment {
                             loadEnd();
                         }
                     }
+                    response.close();
                 }
             });
         } catch (Throwable throwable) {

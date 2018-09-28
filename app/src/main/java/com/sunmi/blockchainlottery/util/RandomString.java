@@ -27,6 +27,8 @@ public class RandomString extends Random {
         return sb;
     }
     public static StringBuilder nextName() {
-        return nextName(randomString.nextInt(2) + 1);
+//        return nextName(randomString.nextInt(2) + 1);
+        return nextName(randomString.nextInt(3) + 1);
     }
+
 }

@@ -129,7 +129,7 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 vh.award_layout.setVisibility(View.GONE);
                 vh.left_time_tv.setVisibility(View.VISIBLE);
                 vh.bet_action.setVisibility(View.VISIBLE);
-
+                lotteryFragment.judgeStatus(vh.bet_action);
 //                setUnClickable(vh.bet_action);
                 long diff = (60 * 1000 - System.currentTimeMillis() + guess.getStartTime().getTime()) / 1000;
                 if (diff < 0) diff = 0;
@@ -147,7 +147,7 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             ResponseBody body = response.body();
-                            response.close();
+
                             if (body != null) {
                                 Message<String> message = new Gson().fromJson(body.string(),
                                         new TypeToken<Message<String>>() {
@@ -158,7 +158,12 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                         Toast.makeText(lotteryFragment.getContext(),
                                                 "投注成功等待确认:" + message.getData(), Toast.LENGTH_SHORT).show();
                                     });
-
+                                    try {
+                                        Thread.sleep(5000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    lotteryFragment.updateCCUser();
                                 } else {
 
                                     lotteryFragment.onButtonPressed(() -> Toast.makeText(lotteryFragment.getContext(),
@@ -166,7 +171,7 @@ public class LotteryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                     System.out.println(message.getMessage() + ", " + message.getData());
                                 }
                             }
-
+                            response.close();
                             dialogs[0].dismiss();
                         }
                     }, (Activity) lotteryFragment.getContext());

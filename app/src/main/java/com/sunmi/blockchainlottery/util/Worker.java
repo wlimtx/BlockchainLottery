@@ -28,16 +28,20 @@ public class Worker {
     }
 
     public static void pause() {
+        if (instance.update!=null)
         instance.update.cancel(false);
+        if (instance.query!=null)
         instance.query.cancel(false);
     }
 
     public static void resume(int initialDelay, int delay, int initialDelay2, int delay2) {
-        instance.update = instance.SERVICE.scheduleWithFixedDelay(instance.updateJob
-                , initialDelay, delay, TimeUnit.SECONDS);
 
-        instance.query = instance.SERVICE.scheduleWithFixedDelay(instance.queryJob
-                , initialDelay2, delay2, TimeUnit.SECONDS);
+        if (instance.updateJob != null)
+            instance.update = instance.SERVICE.scheduleWithFixedDelay(instance.updateJob
+                    , initialDelay, delay, TimeUnit.SECONDS);
+        if (instance.queryJob != null)
+            instance.query = instance.SERVICE.scheduleWithFixedDelay(instance.queryJob
+                    , initialDelay2, delay2, TimeUnit.SECONDS);
     }
 
 }

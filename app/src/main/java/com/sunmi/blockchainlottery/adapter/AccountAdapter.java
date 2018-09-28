@@ -22,10 +22,12 @@ import com.sunmi.blockchainlottery.fragment.AccountFragment;
 import com.sunmi.blockchainlottery.util.DialogUtil;
 import com.sunmi.blockchainlottery.util.ECKeyIO;
 import com.sunmi.blockchainlottery.util.NetUtil;
+import com.sunmi.blockchainlottery.util.SystemUtil;
 import com.uuzuche.lib_zxing.encoding.EncodingHandler;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -120,6 +122,7 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } catch (WriterException e) {
             e.printStackTrace();
         }
+
 
         viewHolder.itemView.setOnClickListener(v -> {
             if (accountUseFlag != viewHolder.account_flag) {

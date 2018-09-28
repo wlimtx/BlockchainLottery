@@ -11,6 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e5abdd7-dfc3-4b9e-af49-4960199416c8" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/SystemUtil.java" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/classAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/classAnalysis.bin" />
@@ -20,9 +21,13 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/AccountAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/AccountAdapter.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/LotteryAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/LotteryAdapter.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/fragment/LotteryFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/fragment/LotteryFragment.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/NetUtil.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/NetUtil.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/DialogUtil.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/DialogUtil.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/RandomString.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/RandomString.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/Worker.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/Worker.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_new_account.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_new_account.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -45,88 +50,66 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PemUtil.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/PemUtil.java">
+      <file leaf-file-name="DialogUtil.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/DialogUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+            <state relative-caret-position="467">
+              <caret line="51" column="38" lean-forward="false" selection-start-line="51" selection-start-column="38" selection-end-line="51" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Worker.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/Worker.java">
+      <file leaf-file-name="MyDialog.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/dialog/MyDialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="29" column="25" lean-forward="false" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
+            <state relative-caret-position="90">
+              <caret line="11" column="11" lean-forward="false" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/MainActivity.java">
+      <file leaf-file-name="ECDSAUtil.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/ECDSAUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="26" column="14" lean-forward="false" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+            <state relative-caret-position="75">
+              <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NetUtil.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/NetUtil.java">
+      <file leaf-file-name="SystemUtil.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/SystemUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="27" column="25" lean-forward="false" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
+            <state relative-caret-position="135">
+              <caret line="9" column="23" lean-forward="false" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
               <folding>
-                <element signature="e#707#708#0" expanded="true" />
-                <element signature="e#758#759#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AccountFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/fragment/AccountFragment.java">
+      <file leaf-file-name="dialog_new_account.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_new_account.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1875">
-              <caret line="159" column="26" lean-forward="false" selection-start-line="159" selection-start-column="26" selection-end-line="159" selection-end-column="26" />
+            <state relative-caret-position="220">
+              <caret line="57" column="20" lean-forward="false" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
               <folding />
             </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="LotteryFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/fragment/LotteryFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="530" column="47" lean-forward="false" selection-start-line="530" selection-start-column="47" selection-end-line="530" selection-end-column="47" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#14432#14433#0" expanded="true" />
-                <element signature="e#14462#14463#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Guess.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/item/Guess.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="26" column="18" lean-forward="false" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CCUser.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/bean/CCUser.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+            <state relative-caret-position="622">
+              <caret line="301" column="29" lean-forward="false" selection-start-line="301" selection-start-column="29" selection-end-line="301" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -135,18 +118,65 @@
       <file leaf-file-name="AccountAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/AccountAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="66" column="30" lean-forward="false" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
+            <state relative-caret-position="343">
+              <caret line="139" column="40" lean-forward="false" selection-start-line="139" selection-start-column="40" selection-end-line="139" selection-end-column="40" />
               <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Objects.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-28/android.jar!/java/util/Objects.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="42" column="24" lean-forward="false" selection-start-line="42" selection-start-column="24" selection-end-line="42" selection-end-column="24" />
+              <folding>
+                <marker date="1528462698108" expanded="false" signature="0:104" ph="/.../" />
+                <marker date="1528462698108" expanded="false" signature="205:216" ph=" { " />
+                <marker date="1528462698108" expanded="false" signature="252:258" ph=" }" />
+                <marker date="1528462698108" expanded="false" signature="312:323" ph=" { " />
+                <marker date="1528462698108" expanded="false" signature="359:365" ph=" }" />
+                <marker date="1528462698108" expanded="false" signature="423:434" ph=" { " />
+                <marker date="1528462698108" expanded="false" signature="470:476" ph=" }" />
+                <marker date="1528462698108" expanded="false" signature="518:529" ph=" { " />
+                <marker date="1528462698108" expanded="false" signature="565:571" ph=" }" />
+                <marker date="1528462698108" expanded="false" signature="617:628" ph=" { " />
+                <marker date="1528462698108" expanded="false" signature="664:670" ph=" }" />
+                <marker date="1528462698108" expanded="false" signature="715:726" ph=" { " />
+                <marker date="1528462698108" expanded="false" signature="762:768" ph=" }" />
+                <marker date="1528462698108" expanded="true" signature="834:886" ph="{...}" />
+                <marker date="1528462698108" expanded="true" signature="957:1009" ph="{...}" />
+                <marker date="1528462698108" expanded="true" signature="1056:1067" ph=" { " />
+                <marker date="1528462698108" expanded="true" signature="1103:1109" ph=" }" />
+                <marker date="1528462698108" expanded="true" signature="1173:1225" ph="{...}" />
+                <marker date="1528462698108" expanded="false" signature="1271:1282" ph=" { " />
+                <marker date="1528462698108" expanded="false" signature="1318:1324" ph=" }" />
+                <marker date="1528462698108" expanded="false" signature="1371:1382" ph=" { " />
+                <marker date="1528462698108" expanded="false" signature="1418:1424" ph=" }" />
+                <marker date="1528462698108" expanded="true" signature="1506:1558" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dialog_qrcode.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_qrcode.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="41" column="20" lean-forward="false" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="LotteryAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/LotteryAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="73" column="23" lean-forward="false" selection-start-line="73" selection-start-column="23" selection-end-line="73" selection-end-column="23" />
+            <state relative-caret-position="469">
+              <caret line="230" column="51" lean-forward="false" selection-start-line="230" selection-start-column="48" selection-end-line="230" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -157,32 +187,13 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="resourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>loadA</find>
-      <find>onSelec</find>
-      <find>resume</find>
-      <find>,</find>
-      <find>onResponse</find>
-      <find>accout</find>
-      <find>man</find>
-      <find>mList</find>
-      <find>runOn</find>
-      <find>数据中断</find>
-      <find>d10cb626d9fa47373e85d1ad531a067dc1c2be7069339bf6a2645b4574939f3e</find>
-      <find>Gue</find>
-      <find>6291e5f22ba798e70bef502e0684f0d6421e56a52812094ffc6cbb5f62ea0bc7</find>
-      <find>sum_bet_tv</find>
-      <find>e6ae3e6dc819908572b528d9e1a34d94db79fa45adcf7319a9c16ea2d3a6fc8d</find>
-      <find>sumBet</find>
-      <find>myguess</find>
-      <find>updateNew</find>
-      <find>listsize</find>
       <find>Guess</find>
       <find>onResponse\(Call call</find>
       <find>Att</find>
@@ -194,7 +205,29 @@
       <find>ccUser</find>
       <find>bet_action</find>
       <find>response</find>
+      <find>judg</find>
+      <find>poll</find>
+      <find>\Q.string()</find>
+      <find>\w+\.string\(\)</find>
+      <find>\QResponseBody body = response.body();</find>
+      <find>body1</find>
+      <find>body\d</find>
+      <find>jude</find>
+      <find>jud</find>
+      <find>account</find>
+      <find>seq</find>
+      <find>bet</find>
+      <find>seq size:</find>
+      <find>mLayoutManager</find>
+      <find>\Qresponse.close();</find>
+      <find>judgeStatus</find>
+      <find>transfer</find>
+      <find>acc</find>
+      <find>new</find>
     </findStrings>
+    <replaceStrings>
+      <replace>bs</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -2274,14 +2307,12 @@
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/dialog.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/corners_bg_bottom.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_account.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_new_account.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/dialog/MyDialog.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_recharge.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/sdk/chaincode/Lottery.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/sdk/chaincode/LotteryUtil.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/ECKeyIO.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/RandomString.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_betting.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/corner_white_all.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/bean/Account.java" />
@@ -2290,14 +2321,18 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_lottery.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_qrcode.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_transfer.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/DialogUtil.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/AccountAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/component/TransferDialog.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/NetUtil.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/item/Guess.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/Worker.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/LotteryAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/item/Guess.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/RandomString.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_new_account.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/ECDSAUtil.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/SystemUtil.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/AccountAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/DialogUtil.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/fragment/LotteryFragment.java" />
       </list>
     </option>
@@ -2366,7 +2401,61 @@
               <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="sunmi" type="462c0819:PsiDirectoryNode" />
               <item name="blockchainlottery" type="462c0819:PsiDirectoryNode" />
+              <item name="adapter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BlockchainLottery" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="sunmi" type="462c0819:PsiDirectoryNode" />
+              <item name="blockchainlottery" type="462c0819:PsiDirectoryNode" />
+              <item name="bean" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BlockchainLottery" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="sunmi" type="462c0819:PsiDirectoryNode" />
+              <item name="blockchainlottery" type="462c0819:PsiDirectoryNode" />
+              <item name="component" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BlockchainLottery" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="sunmi" type="462c0819:PsiDirectoryNode" />
+              <item name="blockchainlottery" type="462c0819:PsiDirectoryNode" />
+              <item name="dialog" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BlockchainLottery" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="sunmi" type="462c0819:PsiDirectoryNode" />
+              <item name="blockchainlottery" type="462c0819:PsiDirectoryNode" />
               <item name="fragment" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BlockchainLottery" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="sunmi" type="462c0819:PsiDirectoryNode" />
+              <item name="blockchainlottery" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BlockchainLottery" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="sunmi" type="462c0819:PsiDirectoryNode" />
+              <item name="blockchainlottery" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -2587,30 +2676,31 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43694142" sideWeight="0.50479233" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45240533" sideWeight="0.497558" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17911975" sideWeight="0.4968051" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43694142" sideWeight="0.50479233" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0" sideWeight="0.49520767" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32844934" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24155578" sideWeight="0.49520767" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12115194" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27021495" sideWeight="0.497558" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16683726" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13247864" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.57994044" sideWeight="0.4968051" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21062271" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Fabric" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2618,8 +2708,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32844934" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -2630,61 +2718,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/corners_bg_all.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-28/android.jar!/android/view/Gravity.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="17" column="28" lean-forward="false" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Android/sdk/platforms/android-28/data/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="34" column="49" lean-forward="false" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/dialog.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="23" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="43" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_account.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="11" column="38" lean-forward="false" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/recyclerview-v7/27.1.1/ad225a74247e675db0b05ea4f8b17202acbb7f9d/recyclerview-v7-27.1.1-sources.jar!/android/support/v7/widget/RecyclerView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="6672" column="0" lean-forward="false" selection-start-line="6672" selection-start-column="0" selection-end-line="6672" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-28/android.jar!/java/lang/Double.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="44" column="75" lean-forward="false" selection-start-line="44" selection-start-column="54" selection-end-line="44" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -2703,13 +2736,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="38" column="11" lean-forward="false" selection-start-line="38" selection-start-column="11" selection-end-line="38" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/dialog/MyDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="11" column="14" lean-forward="false" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -2736,16 +2762,6 @@
         <state relative-caret-position="140">
           <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/account_item.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="64" column="32" lean-forward="false" selection-start-line="64" selection-start-column="32" selection-end-line="64" selection-end-column="32" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_recharge.xml">
@@ -2779,40 +2795,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_lottery.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="75" column="28" lean-forward="false" selection-start-line="75" selection-start-column="28" selection-end-line="75" selection-end-column="28" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_betting.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
           <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_new_account.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="19" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_qrcode.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="23" column="36" lean-forward="false" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
@@ -2861,17 +2847,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/bean/Account.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="25" column="18" lean-forward="false" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/Test.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="46" column="16" lean-forward="false" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2886,13 +2866,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/bean/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -2901,6 +2874,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="15" column="36" lean-forward="false" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2908,13 +2882,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="694">
           <caret line="188" column="30" lean-forward="false" selection-start-line="188" selection-start-column="30" selection-end-line="188" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/ECDSAUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2922,20 +2890,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="15" column="67" lean-forward="false" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/RandomString.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="47" lean-forward="false" selection-start-line="24" selection-start-column="47" selection-end-line="24" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/DialogUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="824">
-          <caret line="137" column="35" lean-forward="false" selection-start-line="137" selection-start-column="35" selection-end-line="137" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2962,49 +2917,9 @@
         <state relative-caret-position="180">
           <caret line="27" column="25" lean-forward="false" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
           <folding>
-            <element signature="e#707#708#0" expanded="true" />
-            <element signature="e#758#759#0" expanded="true" />
+            <element signature="e#707#708#0" expanded="false" />
+            <element signature="e#758#759#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="26" column="14" lean-forward="false" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/fragment/AccountFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1875">
-          <caret line="159" column="26" lean-forward="false" selection-start-line="159" selection-start-column="26" selection-end-line="159" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/AccountAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="66" column="30" lean-forward="false" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/LotteryAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="73" column="23" lean-forward="false" selection-start-line="73" selection-start-column="23" selection-end-line="73" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/Worker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="29" column="25" lean-forward="false" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3024,15 +2939,426 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/fragment/LotteryFragment.java">
+    <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-28/android.jar!/java/lang/String.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="530" column="47" lean-forward="false" selection-start-line="530" selection-start-column="47" selection-end-line="530" selection-end-column="47" />
+        <state relative-caret-position="301">
+          <caret line="128" column="36" lean-forward="false" selection-start-line="128" selection-start-column="36" selection-end-line="128" selection-end-column="36" />
+          <folding>
+            <marker date="1528462698108" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1528462698108" expanded="false" signature="133:286" ph="..." />
+            <marker date="1528462698108" expanded="false" signature="468:479" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="515:521" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="557:568" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="604:610" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="643:654" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="690:696" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="752:763" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="799:805" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="865:876" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="912:918" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="924:942" ph="/**...*/" />
+            <marker date="1528462698108" expanded="true" signature="1026:1078" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="1084:1102" ph="/**...*/" />
+            <marker date="1528462698108" expanded="false" signature="1162:1173" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1209:1215" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="1329:1381" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="1456:1508" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="1598:1650" ph="{...}" />
+            <marker date="1528462698108" expanded="false" signature="1700:1711" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1747:1753" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="1810:1821" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1857:1863" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="1896:1907" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1943:1949" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="1989:2000" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="2036:2042" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="2084:2095" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="2131:2137" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="2162:2173" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="2209:2215" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="2245:2256" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="2292:2298" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="2379:2390" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="2426:2432" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="2475:2486" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="2522:2528" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="2589:2600" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="2636:2642" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="2710:2762" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="2841:2893" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="2899:2917" ph="/**...*/" />
+            <marker date="1528462698108" expanded="true" signature="3011:3063" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="3148:3200" ph="{...}" />
+            <marker date="1528462698108" expanded="false" signature="3245:3256" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="3292:3298" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="3328:3339" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="3375:3381" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="3425:3436" ph=" { " />
+            <marker date="1528462698108" expanded="true" signature="3472:3478" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="3529:3540" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="3576:3582" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="3633:3644" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="3680:3686" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="3745:3756" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="3792:3798" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="3893:3904" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="3940:3946" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="4030:4082" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="4186:4238" ph="{...}" />
+            <marker date="1528462698108" expanded="false" signature="4297:4308" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="4344:4350" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="4396:4407" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="4443:4449" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="4493:4504" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="4540:4546" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="4573:4584" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="4620:4626" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="4658:4669" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="4705:4711" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="4758:4769" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="4805:4811" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="4847:4858" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="4894:4900" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="4951:4962" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="4998:5004" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="5040:5051" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="5087:5093" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="5144:5155" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="5191:5197" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="5237:5248" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="5284:5290" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="5345:5356" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="5392:5398" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="5443:5454" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="5490:5496" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="5555:5566" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="5602:5608" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="5676:5728" ph="{...}" />
+            <marker date="1528462698108" expanded="false" signature="5830:5841" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="5877:5883" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="5925:5936" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="5972:5978" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="6023:6034" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="6070:6076" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="6143:6195" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="6260:6312" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="6387:6439" ph="{...}" />
+            <marker date="1528462698108" expanded="false" signature="6491:6502" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="6538:6544" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="6585:6596" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="6632:6638" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="6720:6772" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="6871:6923" ph="{...}" />
+            <marker date="1528462698108" expanded="false" signature="6969:6980" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="7016:7022" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="7055:7066" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="7102:7108" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="7154:7165" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="7201:7207" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="7240:7251" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="7287:7293" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="7319:7330" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="7366:7372" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="7402:7413" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="7449:7455" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="7561:7613" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="7688:7740" ph="{...}" />
+            <marker date="1528462698108" expanded="false" signature="7786:7797" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="7833:7839" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="7886:7897" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="7933:7939" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="8010:8062" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="8137:8189" ph="{...}" />
+            <marker date="1528462698108" expanded="false" signature="8240:8251" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="8287:8293" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="8338:8349" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="8385:8391" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="8433:8444" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="8480:8486" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="8527:8538" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="8574:8580" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="8622:8633" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="8669:8675" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="8718:8729" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="8765:8771" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="8815:8826" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="8862:8868" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-28/android.jar!/java/util/concurrent/BlockingQueue.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="19" column="6" lean-forward="false" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+          <folding>
+            <marker date="1528462698108" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1528462698108" expanded="false" signature="144:189" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-28/android.jar!/java/util/concurrent/LinkedBlockingQueue.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="14" column="11" lean-forward="false" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+          <folding>
+            <marker date="1528462698108" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1528462698108" expanded="false" signature="144:283" ph="..." />
+            <marker date="1528462698108" expanded="true" signature="422:433" ph=" { " />
+            <marker date="1528462698108" expanded="true" signature="469:475" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="521:532" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="568:574" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="633:644" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="680:686" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="709:720" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="756:762" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="798:809" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="845:851" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="906:958" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="1047:1099" ph="{...}" />
+            <marker date="1528462698108" expanded="false" signature="1130:1141" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1177:1183" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="1233:1285" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="1362:1414" ph="{...}" />
+            <marker date="1528462698108" expanded="false" signature="1435:1446" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1482:1488" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="1509:1520" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1556:1562" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="1599:1610" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1646:1652" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="1691:1702" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1738:1744" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="1775:1786" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1822:1828" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="1863:1874" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1910:1916" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="1946:1957" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1993:1999" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="2024:2035" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="2071:2077" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="2126:2137" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="2173:2179" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="2246:2298" ph="{...}" />
+            <marker date="1528462698108" expanded="false" signature="2333:2344" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="2380:2386" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="2427:2438" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="2474:2480" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-28/android.jar!/java/util/AbstractQueue.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="12" column="19" lean-forward="false" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+          <folding>
+            <marker date="1528462698108" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1528462698108" expanded="false" signature="246:257" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="293:299" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="328:339" ph=" { " />
+            <marker date="1528462698108" expanded="true" signature="375:381" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="404:415" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="451:457" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="481:492" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="528:534" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="559:570" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="606:612" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="666:677" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="713:719" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/bean/Account.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/Worker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="20" column="26" lean-forward="false" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-28/android.jar!/java/util/Queue.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="18" column="6" lean-forward="false" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
+          <folding>
+            <marker date="1528462698108" expanded="false" signature="0:104" ph="/.../" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/bean/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/RandomString.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="46" lean-forward="false" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_lottery.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="31" column="28" lean-forward="false" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/fragment/AccountFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="140" column="39" lean-forward="false" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/account_item.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="75" column="28" lean-forward="false" selection-start-line="75" selection-start-column="28" selection-end-line="75" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_new_account.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="57" column="20" lean-forward="false" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_qrcode.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="41" column="20" lean-forward="false" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/ECDSAUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-28/android.jar!/java/util/Objects.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="42" column="24" lean-forward="false" selection-start-line="42" selection-start-column="24" selection-end-line="42" selection-end-column="24" />
+          <folding>
+            <marker date="1528462698108" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1528462698108" expanded="false" signature="205:216" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="252:258" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="312:323" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="359:365" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="423:434" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="470:476" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="518:529" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="565:571" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="617:628" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="664:670" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="715:726" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="762:768" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="834:886" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="957:1009" ph="{...}" />
+            <marker date="1528462698108" expanded="true" signature="1056:1067" ph=" { " />
+            <marker date="1528462698108" expanded="true" signature="1103:1109" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="1173:1225" ph="{...}" />
+            <marker date="1528462698108" expanded="false" signature="1271:1282" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1318:1324" ph=" }" />
+            <marker date="1528462698108" expanded="false" signature="1371:1382" ph=" { " />
+            <marker date="1528462698108" expanded="false" signature="1418:1424" ph=" }" />
+            <marker date="1528462698108" expanded="true" signature="1506:1558" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/SystemUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="23" lean-forward="false" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#14432#14433#0" expanded="true" />
-            <element signature="e#14462#14463#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/AccountAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="139" column="40" lean-forward="false" selection-start-line="139" selection-start-column="40" selection-end-line="139" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/dialog/MyDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="11" column="11" lean-forward="false" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/util/DialogUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="51" column="38" lean-forward="false" selection-start-line="51" selection-start-column="38" selection-end-line="51" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/adapter/LotteryAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="469">
+          <caret line="230" column="51" lean-forward="false" selection-start-line="230" selection-start-column="48" selection-end-line="230" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sunmi/blockchainlottery/fragment/LotteryFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="622">
+          <caret line="301" column="29" lean-forward="false" selection-start-line="301" selection-start-column="29" selection-end-line="301" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>

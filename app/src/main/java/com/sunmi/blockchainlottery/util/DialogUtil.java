@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,9 +18,11 @@ import com.google.zxing.WriterException;
 import com.sunmi.blockchainlottery.R;
 import com.sunmi.blockchainlottery.bean.Account;
 import com.sunmi.blockchainlottery.dialog.MyDialog;
+import com.sunmi.blockchainlottery.fragment.AccountFragment;
 import com.uuzuche.lib_zxing.encoding.EncodingHandler;
 
 import java.security.KeyPair;
+import java.util.Objects;
 import java.util.logging.Handler;
 
 import okhttp3.Callback;
@@ -38,6 +42,18 @@ public class DialogUtil {
                 .inflate(R.layout.dialog_qrcode, null);
         TextView address_tv = view.findViewById(R.id.address);
         ImageView big_qr_code = view.findViewById(R.id.big_qr_code);
+
+
+        address_tv.setOnClickListener(v->{
+            if (address != null) {
+                SystemUtil.putTextIntoClip(context, address);
+                Toast.makeText(context, "已复制:" + address, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "复制失败" ,Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
         address_tv.setText(address);
         big_qr_code.setImageBitmap(EncodingHandler.createQRCode(address, 200));
         MyDialog dialog = new MyDialog(context, view, R.style.dialog);
@@ -53,6 +69,11 @@ public class DialogUtil {
                 .inflate(R.layout.dialog_new_account, null);
         TextView address = view.findViewById(R.id.address);
         EditText nick_name = view.findViewById(R.id.nick_name);
+//        nick_name.setScroller(new Scroller(activity));
+//        nick_name.setMaxLines(1);
+//        nick_name.setVerticalScrollBarEnabled(false);
+//        nick_name.setHorizontalScrollBarEnabled(true);
+//        nick_name.setMovementMethod(new ScrollingMovementMethod());
         Button cancel = view.findViewById(R.id.cancel);
         Button confirm = view.findViewById(R.id.confirm);
         KeyPair keyPair = ECDSAUtil.generateKey();
@@ -66,7 +87,10 @@ public class DialogUtil {
             String name = nick_name.getText().toString();
             if (name.trim().length() == 0) {
                 activity.runOnUiThread(() -> Toast.makeText(activity, "用户名不能为空", Toast.LENGTH_SHORT).show());
+            } else if (name.trim().length() > 4) {
+                activity.runOnUiThread(() -> Toast.makeText(activity, "用户名长度过长", Toast.LENGTH_SHORT).show());
             } else {
+
                 callBack.newAccount(
                         new Account(name, keys[0], keys[1], keys[2]));
                 dialog.dismiss();
